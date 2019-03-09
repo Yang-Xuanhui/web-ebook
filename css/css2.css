@@ -82,14 +82,14 @@ input.button.gray {
 }
 
 #header {
-    background-color: #fff;
+    background-color: #c8f1ff;
     height: 50px;
     padding: 10px 60px;
     position: relative;
     z-index: 100;
 }
 body.docs #header {
-    position: fixed;
+    position: center;
     width: 100%;
     top: 0;
 }
@@ -98,7 +98,7 @@ body.docs #header {
     display: inline-block;
     font-size: 2em;
     line-height: 45px;
-    color: #2c3e50;
+    color: rgba(23, 4, 45, 0.85);
     font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
     font-weight: 700;
 }
@@ -111,13 +111,22 @@ body.docs #header {
 .sidebar {
     position: relative;
     float: left;
-    width:170px;
+    width:100%;
     z-index: 10;
-    background-color: #f9f9f9;
+    background-color: #b6f5ff;
     height: 100%;
     top: 55px;
     left: 0;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-shadow: 0 0 10px rgba(51, 136, 255, 0.2);
+}
+.main-menu .nav-dropdown li{
+    float:left;
+    list-style: none;
+    padding: 8px 15px;
+    background-color: #84aeb8;
+    color: rgba(23, 4, 45, 0.85);
+    outline-style: dotted;
+    outline-color: #2c3e50;
 }
 .sidebar h2 {
     margin-top: 0.2em;
@@ -144,7 +153,7 @@ body.docs #header {
 }
 .sidebar .sidebar-link.current {
     font-weight: 600;
-    color: #42b983;
+    color: rgba(74, 4, 127, 0.71);
 }
 .sidebar .sidebar-link.new:after {
     content: "NEW";
@@ -152,7 +161,7 @@ body.docs #header {
     font-size: 10px;
     font-weight: 600;
     color: #fff;
-    background-color: #42b983;
+    background-color: rgba(74, 4, 127, 0.33);
     line-height: 14px;
     padding: 0 4px;
     border-radius: 3px;
@@ -162,11 +171,11 @@ body.docs #header {
     top: -1px;
 }
 .sidebar .sidebar-link:hover {
-    border-bottom: 2px solid #42b983;
+    border-bottom: 2px solid #5b8099;
 }
 .sidebar .section-link.active {
     font-weight: bold;
-    color: #42b983;
+    color: #5b8099;
 }
 .sidebar .main-menu {
     margin-bottom: 20px;
@@ -179,16 +188,16 @@ body.docs #header {
 }
 
 .intro{
-    padding: 55px 50px 900px 180px;
-    background-color: #fff;
+    padding: 200px 50px 900px 50px;
+    background-color: #c8f1ff;
     height:100%;
 }
 .one-book{
     float: left;
-    width: 33%;
+    width: 25%;
     heigt:300px;
 }
-.one-book img{
+.book-cover{
     vertical-align: middle;
     height: 200px;
     padding:5px 5px;
@@ -216,7 +225,7 @@ body.docs #header {
 
 .details{
     border-style: solid;
-    border-color: #6ecda9;
+    border-color: #0f577f;
 }
 .buy{
     float:left;
@@ -225,8 +234,8 @@ body.docs #header {
     text-align: center;
     color: #24070c;
     outline-style: ridge;
-    outline-color: #84eab1;
-    background-color: #6ecda9;
+    outline-color: rgba(74, 4, 127, 0.48);
+    background-color: rgba(74, 4, 127, 0.56);
 
 }
 .content{

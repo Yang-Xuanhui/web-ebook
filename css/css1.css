@@ -98,7 +98,7 @@ body.docs #header {
     display: inline-block;
     font-size: 2em;
     line-height: 45px;
-    color: #2c3e50;
+    color: #075034;
     font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
     font-weight: 700;
 }
@@ -117,7 +117,7 @@ body.docs #header {
     height: 100%;
     top: 55px;
     left: 0;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-shadow: 0 0 10px rgba(7, 80, 52, 0.2);
 }
 .sidebar h2 {
     margin-top: 0.2em;
