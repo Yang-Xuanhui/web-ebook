@@ -3,45 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title>Brief</title>
-    <link rel="stylesheet" type="text/css" href="/css/css1.css" >
+    <link rel="stylesheet" type="text/css" href="css/css1.css">
 </head>
 <body>
-    <div class="container">
-    <div class="header">
-        <img src="img/logo.png" class="logo">
-        <div>
-            books
+        <div id="header">
+            <a id="logo">
+                <img src="img/logo.png">
+                <span>
+                    E-BOOK
+                </span>
+            </a>
         </div>
-    </div>
-    <div class="class_info" class="sidebar">
-        <h4>分类</h4>
-        <ul>
-            <li>计算机</li>
-            <li>小说</li>
-            <li>绘本</li>
-        </ul>
-    </div>
-    <div class="brief_intro">
-        <img src="img/cs.jpg" class="cover">
-        <ul>
-            <li>深入理解计算机系统</li>
-            <li>writer</li>
-            <li>ISBN</li>
-            <li>库存</li>
-        </ul>
-    </div>
-    <div class="brief_intro" >
-        <img src="img/cs.jpg" class="cover">
-        <ul>
-            <li>深入理解计算机系统</li>
-            <li>writer</li>
-            <li>ISBN</li>
-            <li>库存</li>
-        </ul>
-    </div>
-        <div class="footer">
-            this is the footer
+
+        <div class="sidebar">
+            <div class="sidebar-inner-index">
+            <ul class="main-menu">
+                <li>
+                    <form id="search=form">
+
+                    </form>
+                </li>
+                <li class="nav-dropdown-container">
+                    <a class="nav-link">分类</a>
+                    <span class="arrow"></span>
+                    <ul class="nav-dropdown">
+                        <li>计算机</li>
+                        <li>小说</li>
+                        <li>绘本</li>
+                        <li>...</li>
+                    </ul>
+                </li>
+            </ul>
+            </div>
         </div>
-    </div>
+        <div class="intro">
+            <a class="one-book">
+                <img src="img/cs.jpg">
+                <ul>
+                    <li>深入理解计算机系统</li>
+                    <li>（美）布赖恩特（Bryant,R.E.） 等 </li>
+                    <li>ISBN : 9787111544937</li>
+                    <li>库存 : 25</li>
+                </ul>
+            </a>
+            <a class="one-book">
+            <img src="img/db.jpg">
+            <ul>
+                <li>数据库系统概念</li>
+                <li> (美)希尔伯沙茨 </li>
+                <li>ISBN : 9787111234227</li>
+                <li>库存 : 34</li>
+            </ul>
+            </a>
+            <a class="one-book">
+                <img src="img/lr.jpg">
+                <ul>
+                    <li>向左走，向右走</li>
+                    <li>几米 </li>
+                    <li>ISBN : 9787108017444</li>
+                    <li>库存 : 77</li>
+                </ul>
+            </a>
+            <a class="one-book">
+                <img src="img/moon.jpg">
+                <ul>
+                    <li>月亮忘记了</li>
+                    <li>几米 </li>
+                    <li>ISBN : 9787510872839</li>
+                    <li>库存 : 47</li>
+                </ul>
+            </a>
+            <a class="one-book">
+                <img src="img/twocities.jpg">
+                <ul>
+                    <li>双城记</li>
+                    <li>（英）查尔斯·狄更斯 </li>
+                    <li>ISBN : 9787554608258</li>
+                    <li>库存 : 82</li>
+                </ul>
+            </a>
+        </div>
+
 </body>
 </html>
