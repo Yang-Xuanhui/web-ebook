@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="css/vendor/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="css/flat-ui.css" rel="stylesheet">
+
+    <link href="css/index1.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+    <script src="../../dist/js/vendor/html5shiv.js"></script>
+    <script src="../../dist/js/vendor/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">E-BOOK</a>
+            <ul class="nav nav-dropdown">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Books</a></li>
+                <li><a href="#">Cart</a></li>
+                <li><a href="#">Orders</a></li>
+            </ul>
+
+        </div>
+        <button type="button" class="btn btn-primary right" id="signin" onclick="showLayer('layer',300,400)">Sign in</button>
+    </div>
+</div>
+<div class="container">
+
+    <div class="col-lg-6" align="center">
+        <img id="logo" src="img/logo.png" class="img-fluid">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div><!-- /input-group -->
+        </div><!-- /.form-group -->
+    </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+</div>
+
+<div class="container">
+
+    <form class="form-signin" id="layer" action="" method="post">
+        <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <a onclick="layer.style.display=none"></a>
+        <label for="inputEmail" class="sr-only">User name</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="User name" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+    </form>
+
+
+</div> <!-- /container -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<!-- Bootstrap 4 requires Popper.js -->
+<script src="https://unpkg.com/popper.js@1.14.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+
+<script src="js/flat-ui.js"></script>
+
+<script src="js/application.js"></script>
+
+<script src="js/signin.js"></script>
+
+</body>
+</html>
