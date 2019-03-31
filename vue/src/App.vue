@@ -18,9 +18,6 @@
             <el-menu-item index="/brief">
               图书浏览
             </el-menu-item>
-            <el-menu-item index="/detail">
-              图书详情
-            </el-menu-item>
             <el-menu-item index="/cart">
               购物车
             </el-menu-item>
@@ -58,5 +55,8 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
+ul
+{
+  list-style:none;
+}
 </style>

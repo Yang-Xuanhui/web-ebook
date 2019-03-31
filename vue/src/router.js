@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from './views/Login.vue'
 import Home from './views/Home.vue'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [
@@ -21,9 +21,9 @@ export default new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/Brief.vue')
         },
         {
-            path: '/detail',
+            path: '/detail/:Name',
             name: 'detail',
-            component: () => import('./views/Detail.vue')
+            component: () => import('./views/Detail.vue'),
         },
         {
             path: '/cart',
