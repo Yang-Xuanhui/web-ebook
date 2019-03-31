@@ -1,12 +1,12 @@
 <template>
     <div class="detail">
         <div>
-            <el-button class="goback" icon="el-icon-back" v-on:click="$router.go(-1)">返回</el-button>
+
         </div>
 
         <div>
             <el-row>
-                <el-col :span="8">
+                <el-col :span="6">
                     <img class="cover" :src="book.cover"/>
                 </el-col>
                 <el-col :span="14" class="book-infor">
@@ -33,20 +33,23 @@
                                     <div class="price">
                                         &yen; <span>{{book.price}}</span>
                                     </div>
-                                    <el-row :gutter="8">
-                                        <el-col :span="8">
+                                    <el-row>
+                                        <el-col :span="12">
                                             <el-input-number v-model="book.number"
                                                              :min="0" :max=book.storage label="number"
-                                                             size="small" class="input-number"></el-input-number>
+                                                              class="input-number"></el-input-number>
                                         </el-col>
-                                        <el-col :span="8">
-                                            <el-button size="small" type="danger">加入购物车</el-button>
+                                        <el-col :span="12">
+                                            <el-button round type="success">加入购物车</el-button>
                                         </el-col>
                                     </el-row>
                                 </el-col>
                             </el-row>
                         </li>
                     </ul>
+                </el-col>
+                <el-col :span="4">
+                    <el-button class="goback" round icon="el-icon-back" v-on:click="$router.go(-1)">返回</el-button>
                 </el-col>
             </el-row>
         </div>
@@ -70,10 +73,6 @@
             }
         },
         props:['Name','Book'],
-        computed:{
-        },
-        method:{
-        }
     }
 </script>
 <style scoped>
@@ -111,7 +110,7 @@
     .price{
         padding: 20px;
         font-size:20px;
-        color: #F56C6C;
+        color: #ff86a5;
         font-weight: bolder;
     }
     .price span{
