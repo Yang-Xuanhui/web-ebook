@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+/* for book table, focus*/
 Vue.directive('focus', function (el, option) {
     var defClass = 'el-input', defTag = 'input';
     var value = option.value || true;

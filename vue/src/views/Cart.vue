@@ -52,13 +52,17 @@
             <el-table-column
                     label="详情">
                 <template slot-scope="scope">
-                    <el-button size="small" type="text" v-on:click="routerTo(scope.row)" >查看详情</el-button>
+                    <el-button size="small"
+                               type="text"
+                               v-on:click="routerTo(scope.row)" >查看详情</el-button>
                 </template>
             </el-table-column>
             <el-table-column
                     label="删除">
                 <template slot-scope="scope">
-                    <el-button size="small" type="text" v-on:click="Delete(scope.$index)" >删除</el-button>
+                    <el-button size="small"
+                               type="text"
+                               v-on:click="Delete(scope.$index)" >删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -146,6 +150,7 @@
             routerTo :function (book) {
                 this.$router.push({ name: 'detail', params: { Book: book, Name:book.Name }});
             },
+            /* delete row from the table, but not delete from the origin data*/
             Delete(index){
                 this.carts.splice(index,1);
             },

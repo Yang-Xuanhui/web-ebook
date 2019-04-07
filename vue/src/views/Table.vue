@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!--排序、搜索栏 card和table切换键-->
         <el-row class="sort-search" type="flex" justify="space-between">
             <el-col :span="12">
                 <el-button-group >
@@ -41,7 +42,7 @@
                 </el-switch>
             </el-col>
         </el-row>
-
+        <!--图书浏览内容用card方式呈现-->
         <div v-show="!checked">
             <el-card class="book-card"
                      v-for="(book) in orderedBooks"
@@ -66,7 +67,7 @@
                 </div>
             </el-card>
         </div>
-
+        <!--用table方式呈现-->
         <div v-show="checked">
             <el-table :data="orderedBooks"
                       class="tb-edit"
@@ -175,8 +176,6 @@
             </el-table>
 
         </div>
-
-
     </div>
 </template>
 
@@ -195,12 +194,14 @@
             }
         },
         props:{
+            /* 图书内容从父组件获得*/
             books:{
                 type:Array,
                 required:true,
             }
         },
         methods:{
+            /* 升降序切换*/
             setOrder :function(type) {
                 let order = this.Sort.order;
                 if(order==='asc'){
@@ -214,9 +215,11 @@
                 this.$set(this.Sort,'sort_type',type);
 
             },
+            /* 路由，跳转到对应详情页*/
             routerTo :function (book) {
                 this.$router.push({ name: 'detail', params: { Book: book, Name:book.Name }});
             },
+            /* 根据该列的label设置对应的flag */
             dblhandleCurrentChange :function (row, column) {
                 switch (column.label) {
                     case "书名":
@@ -239,6 +242,7 @@
                         break;
                 }
             },
+            /* 修改完内容后失去对焦，修改flag，内容从input形式变为显示修改后内容*/
             inputblur() {
                 let tableD = this.books;
                 tableD.forEach(function (item) {
@@ -250,11 +254,13 @@
                     item.salesflag = false;
                 });
             },
+            /*删除行，从当前排序下的数组中删除内容，没有根本删除*/
             Delete(index){
                 this.orderedBooks.splice(index,1);
             },
         },
         computed: {
+            /* 图书排序并筛选*/
             orderedBooks: function () {
                 let search = this.search;
                 return (_.orderBy(this.books, this.Sort.sort_type,this.Sort.order))
