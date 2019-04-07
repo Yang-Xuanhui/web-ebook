@@ -1,0 +1,245 @@
+body {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #34495e;
+    background-color: #fff;
+    margin: 0;
+}
+body.docs {
+    padding-top: 61px;
+}
+a {
+    text-decoration: none;
+    color: #34495e;
+}
+img {
+    border: none;
+}
+h1,
+h2,
+h3,
+h4,
+strong {
+    font-weight: 600;
+    color: #2c3e50;
+}
+code,
+pre {
+    font-family: "Roboto Mono", Monaco, courier, monospace;
+    font-size: 0.8em;
+    background-color: #f8f8f8;
+    -webkit-font-smoothing: initial;
+    -moz-osx-font-smoothing: initial;
+}
+code {
+    color: #e96900;
+    padding: 3px 5px;
+    margin: 0 2px;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+em {
+    color: #7f8c8d;
+}
+p {
+    word-spacing: 0.05em;
+}
+a.button,
+input.button {
+    padding: 0.75em 2em;
+    border-radius: 2em;
+    display: inline-block;
+    color: #fff;
+    background-color: #4fc08d;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+    border: 1px solid #4fc08d;
+}
+a.button.has-icon,
+input.button.has-icon {
+    position: relative;
+    text-indent: 1.4em;
+}
+a.button.has-icon > svg,
+input.button.has-icon > svg {
+    position: absolute;
+    left: 0.4em;
+    top: 0.4em;
+    width: 2em;
+}
+a.button.white,
+input.button.white {
+    background-color: #fff;
+    color: #42b983;
+}
+a.button.gray,
+input.button.gray {
+    background-color: #f6f6f6;
+    color: #7f8c8d;
+    border-color: #f6f6f6;
+}
+
+#header {
+    background-color: #c8f1ff;
+    height: 50px;
+    padding: 10px 60px;
+    position: relative;
+    z-index: 100;
+}
+body.docs #header {
+    position: center;
+    width: 100%;
+    top: 0;
+}
+
+#logo {
+    display: inline-block;
+    font-size: 2em;
+    line-height: 45px;
+    color: rgba(23, 4, 45, 0.85);
+    font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700;
+}
+#logo img {
+    vertical-align: middle;
+    margin-right: 6px;
+    height: 80px;
+}
+
+.sidebar {
+    position: relative;
+    float: left;
+    width:100%;
+    z-index: 10;
+    background-color: #b6f5ff;
+    height: 100%;
+    top: 55px;
+    left: 0;
+    box-shadow: 0 0 10px rgba(51, 136, 255, 0.2);
+}
+.main-menu .nav-dropdown li{
+    float:left;
+    list-style: none;
+    padding: 8px 15px;
+    background-color: #84aeb8;
+    color: rgba(23, 4, 45, 0.85);
+    outline-style: dotted;
+    outline-color: #2c3e50;
+}
+.sidebar h2 {
+    margin-top: 0.2em;
+}
+.sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    line-height: 1.5em;
+    padding-left: 1em;
+}
+.sidebar li {
+    margin-top: 0.5em;
+}
+.sidebar .sidebar-inner-index {
+    padding: 10px 10px 10px 20px;
+}
+
+.sidebar .menu-root {
+    padding-left: 0;
+}
+
+.sidebar .sidebar-link {
+    color: #7f8c8d;
+}
+.sidebar .sidebar-link.current {
+    font-weight: 600;
+    color: rgba(74, 4, 127, 0.71);
+}
+.sidebar .sidebar-link.new:after {
+    content: "NEW";
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    background-color: rgba(74, 4, 127, 0.33);
+    line-height: 14px;
+    padding: 0 4px;
+    border-radius: 3px;
+    margin-left: 5px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+}
+.sidebar .sidebar-link:hover {
+    border-bottom: 2px solid #5b8099;
+}
+.sidebar .section-link.active {
+    font-weight: bold;
+    color: #5b8099;
+}
+.sidebar .main-menu {
+    margin-bottom: 20px;
+    display: block;
+    padding-left: 0;
+}
+.sidebar .nav-dropdown h4 {
+    font-weight: normal;
+    margin: 0;
+}
+
+.intro{
+    padding: 200px 50px 900px 50px;
+    background-color: #c8f1ff;
+    height:100%;
+}
+.one-book{
+    float: left;
+    width: 25%;
+    heigt:350px;
+}
+.book-cover{
+    vertical-align: middle;
+    height: 200px;
+    padding:5px 5px;
+}
+
+.one-book-big{
+    float: left;
+    width: 50%;
+    height:500px;
+}
+.one-book-big img{
+    vertical-align: middle;
+    height:90%;
+    padding:10px 20px;
+}
+.information{
+    float:left;
+    width:50%;
+    height:500px;
+}
+#information{
+    font-size: 25px;
+
+}
+
+.details{
+    border-style: solid;
+    border-color: #0f577f;
+}
+.buy{
+    float:left;
+    width:33%;
+    font-size: 25px;
+    text-align: center;
+    color: #24070c;
+    outline-style: ridge;
+    outline-color: rgba(74, 4, 127, 0.48);
+    background-color: rgba(74, 4, 127, 0.56);
+
+}
+.content{
+    font-size: 15px;
+    white-space: pre-wrap;
+
+}

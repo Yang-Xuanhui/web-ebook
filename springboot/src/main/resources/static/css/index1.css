@@ -1,0 +1,23 @@
+body {
+    min-height: 2000px;
+}
+
+.navbar-static-top {
+    margin-bottom: 19px;
+}
+.nav-dropdown li{
+    float:left;
+    list-style: none;
+    padding: 8px 30px;
+    font-size: 20px;
+}
+
+.right{
+    float:right;
+}
+
+#logo{
+    height: 250px;
+    text-align: center;
+    padding: 10px;
+}
