@@ -1,15 +1,11 @@
 package com.ebook.ebook;
 
 public class Detail{
-    String name,cname,writer,isbn;
-    Integer storage;
-    double price;
-    String detail,writer_intro,comment;
+    String name,cname,writer,isbn,img;
+    Integer storage,sales;
+    float price;
+    String book_intro,writer_intro,book_comment;
     public void Detail(){
-        this.name = "000";
-        this.detail="123";
-        this.writer_intro="234";
-        this.comment = "345";
     }
     public String getName(){
         return name;
@@ -23,20 +19,26 @@ public class Detail{
     public String getIsbn(){
         return isbn;
     }
+    public String getImg(){
+        return img;
+    }
+    public float getPrice(){
+        return price;
+    }
     public Integer getStorage(){
         return storage;
     }
-    public double getPrice(){
-        return price;
+    public Integer getSales(){
+        return sales;
     }
-    public String getDetail(){
-        return detail;
+    public String getBook_intro(){
+        return book_intro;
     }
     public String getWriter_intro(){
         return writer_intro;
     }
-    public String getComment(){
-        return comment;
+    public String getBook_comment(){
+        return book_comment;
     }
 
     public void setName(String name){
@@ -51,19 +53,25 @@ public class Detail{
     public void setIsbn(String isbn){
         this.isbn = isbn;
     }
+    public void setImg(String img){
+        this.img = img;
+    }
+    public void setPrice(float price) {
+        this.price = price;
+    }
     public void setStorage(Integer storage){
         this.storage = storage;
     }
-    public void setPrice(double price) {
-        this.price = price;
+    public void setSales(Integer sales){
+        this.sales =sales;
     }
-    public void setDetail(String detail){
-        this.detail = detail;
+    public void setBook_intro(String book_intro){
+        this.book_intro = book_intro;
     }
     public void setWriter_intro(String writer_intro){
         this.writer_intro = writer_intro;
     }
-    public void setComment(String comment){
-        this.comment = comment;
+    public void setBook_omment(String comment){
+        this.book_comment = comment;
     }
 }
