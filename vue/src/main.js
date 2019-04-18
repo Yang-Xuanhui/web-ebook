@@ -4,6 +4,9 @@ import router from './router'
 import '../theme/index.css'
 import ElementUI from 'element-ui'
 import './directive.js'
+import axios from 'axios'
+Vue.prototype.$http = axios
+Vue.prototype.$axios = axios
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false;

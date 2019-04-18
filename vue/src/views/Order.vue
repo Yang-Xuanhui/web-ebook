@@ -58,7 +58,7 @@
                     {
                         name:"白夜行",
                         Name:"baiyexing",
-                        cover: require('../static/img/white.jpg'),
+                        cover: require('../static/img/whiteNights.jpg'),
                         writer:"东野圭吾",
                         ISBN:"9787544291163",
                         price:59.60,
@@ -103,7 +103,7 @@
                     {
                         name:"123",
                         Name:"123",
-                        cover: require('../static/img/white.jpg'),
+                        cover: require('../static/img/whiteNights.jpg'),
                         writer:"123",
                         ISBN:"1111111111",
                         price:111,

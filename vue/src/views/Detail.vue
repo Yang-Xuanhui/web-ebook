@@ -7,18 +7,18 @@
         <div>
             <el-row>
                 <el-col :span="6">
-                    <img class="cover" :src="book.cover"/>
+                    <img class="cover" :src='image'/>
                 </el-col>
                 <el-col :span="14" class="book-infor">
                     <ul>
-                        <li class="book-name"><span>{{book.name}}</span></li>
+                        <li class="book-name"><span>{{book.cname}}</span></li>
                         <li><hr size="1"></li>
                         <li class="brief-intro">{{book.brief}}</li>
                         <li>
                             <el-row :gutter="20">
                                 <el-col :span="8">
                                         <p class="other-infor">作者：{{book.writer}}</p>
-                                        <p class="other-infor">ISBN：{{book.ISBN}}</p>
+                                        <p class="other-infor">ISBN：{{book.isbn}}</p>
                                         <p class="other-infor">库存：{{book.storage}}</p>
                                         <p class="other-infor">销量：{{book.sales}}</p>
                                         <el-rate
@@ -35,7 +35,7 @@
                                     </div>
                                     <el-row>
                                         <el-col :span="12">
-                                            <el-input-number v-model="book.number"
+                                            <el-input-number v-model="orderitems.number"
                                                              :min="0" :max=book.storage label="number"
                                                               class="input-number"></el-input-number>
                                         </el-col>
@@ -56,9 +56,9 @@
         <hr size="1">
         <div>
             <el-tabs type="border-card" class="Detail">
-                <el-tab-pane label="内容简介">{{book.detail}}</el-tab-pane>
+                <el-tab-pane label="内容简介">{{book.book_intro}}</el-tab-pane>
                 <el-tab-pane label="作者简介">{{book.writer_intro}}</el-tab-pane>
-                <el-tab-pane label="评价">{{book.comment}}</el-tab-pane>
+                <el-tab-pane label="评价">{{book.book_comment}}</el-tab-pane>
             </el-tabs>
         </div>
     </div>
@@ -68,30 +68,18 @@
     export default {
         data(){
             return{
-                name: this.$route.params.Name,
+                image:this.$route.params.Image,
                 book: this.$route.params.Book,
+                orderitems:{
+                    number:0
+                },
             }
         },
-        props:['Name','Book'],
-        /*
+        props:['Image','Book'],
+        computed:{
+        },
         methods:{
-            loadData: function() {
-                var that = this;
-                axios.get('http://localhost:8889/user/list')
-                    .then(function (response) {
-                        var data = response.data;
-                        that.users = data;
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
         },
-        mounted: function() {
-            // 页面加载执行方法
-            this.loadData();
-        }
-        */
     }
 </script>
 <style scoped>

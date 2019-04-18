@@ -21,7 +21,7 @@ export default new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/Brief.vue')
         },
         {
-            path: '/detail/:Name',
+            path: '/detail/:Book.id',
             name: 'detail',
             component: () => import('./views/Detail.vue'),
         },

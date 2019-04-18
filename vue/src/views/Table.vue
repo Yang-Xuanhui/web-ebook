@@ -5,7 +5,7 @@
             <el-col :span="12">
                 <el-button-group >
                     <el-button id="name" type="success"
-                               v-on:click="setOrder('name')" >
+                               v-on:click="setOrder('cname')" >
                         <span>书名</span>
                         <i class="el-icon-sort-up"></i>
                         <i class="el-icon-sort-down"></i>
@@ -47,12 +47,12 @@
             <el-card class="book-card"
                      v-for="(book) in orderedBooks"
                      v-bind:key="book.name">
-                <img :src="book.cover" class="cover"/>
+                <img :src="require('../static/img/'+book.img)" class="cover"/>
                 <div class="book-infor">
                     <ul>
-                        <li class="book-name"><span>{{book.name}}</span></li>
+                        <li class="book-name"><span>{{book.cname}}</span></li>
                         <li class="other-infor">作者：{{book.writer}}</li>
-                        <li class="other-infor">ISBN：{{book.ISBN}}</li>
+                        <li class="other-infor">ISBN：{{book.isbn}}</li>
                         <li class="other-infor">库存：{{book.storage}}</li>
                         <li class="other-infor">销量：{{book.sales}}</li>
                         <li class="price">&yen; <span>{{book.price}}</span></li>
@@ -63,7 +63,7 @@
                                      label="number"
                                      size="small" class="input-number"></el-input-number>
                     <el-button size="small" type="success">加入购物车</el-button>
-                    <el-button size="small" type="text" v-on:click="routerTo(book)" >查看详情</el-button>
+                    <el-button size="small" type="text" v-on:click="loadData(book.id)" >查看详情</el-button>
                 </div>
             </el-card>
         </div>
@@ -86,11 +86,11 @@
                     >
                         <template slot-scope="scope">
                             <el-input v-if="scope.row.nameflag"
-                                      size="small" v-model="scope.row.name"
+                                      size="small" v-model="scope.row.cname"
                                       placeholder="please input"
                                       v-on:blur="inputblur"
                                       v-focus></el-input>
-                            <span v-if="!scope.row.nameflag">{{scope.row.name}}</span>
+                            <span v-if="!scope.row.nameflag">{{scope.row.cname}}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -114,11 +114,11 @@
                     >
                         <template slot-scope="scope">
                             <el-input v-if="scope.row.isbnflag"
-                                      size="small" v-model="scope.row.ISBN"
+                                      size="small" v-model="scope.row.isbn"
                                       placeholder="please input"
                                       v-on:blur="inputblur"
                                       v-focus></el-input>
-                            <span v-if="!scope.row.isbnflag">{{scope.row.ISBN}}</span>
+                            <span v-if="!scope.row.isbnflag">{{scope.row.isbn}}</span>
                         </template>
                     </el-table-column>
                 <el-table-column
@@ -164,7 +164,7 @@
                     <el-table-column
                             label="详情">
                             <template slot-scope="scope">
-                        <el-button size="small" type="text" v-on:click="routerTo(scope.row)" >查看详情</el-button>
+                        <el-button size="small" type="text" v-on:click="loadData(scope.row.id)" >查看详情</el-button>
                             </template>
                     </el-table-column>
                 <el-table-column
@@ -215,10 +215,7 @@
                 this.$set(this.Sort,'sort_type',type);
 
             },
-            /* 路由，跳转到对应详情页*/
-            routerTo :function (book) {
-                this.$router.push({ name: 'detail', params: { Book: book, Name:book.Name }});
-            },
+
             /* 根据该列的label设置对应的flag */
             dblhandleCurrentChange :function (row, column) {
                 switch (column.label) {
@@ -258,6 +255,21 @@
             Delete(index){
                 this.orderedBooks.splice(index,1);
             },
+            loadData: function(id) {
+                this.$http.get('http://localhost:8011/detail',{params:{id:id}})
+                    .then((response) =>{
+                        let book = response.data;
+                        let image = require("../static/img/"+book.img);
+                        //console.log(book)
+                        //console.log(response.data);
+                        /* 路由，跳转到对应详情页*/
+                        this.$router.push({ name: 'detail', params: { Book: book, Image: image}});
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })
+
+            }
         },
         computed: {
             /* 图书排序并筛选*/
@@ -266,9 +278,9 @@
                 return (_.orderBy(this.books, this.Sort.sort_type,this.Sort.order))
                     .filter(
                         data=>!search ||
-                            data.name.includes(search) ||
+                            data.cname.includes(search) ||
                             data.writer.includes(search) ||
-                            data.ISBN.includes(search));
+                            data.isbn.includes(search));
             }
         }
 

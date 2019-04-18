@@ -5,7 +5,7 @@
                 <el-input v-model="user.name"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-            <el-input v-model="user.pass" type="password"></el-input>
+            <el-input v-model="user.password" type="password"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="success" round @click="login">登录</el-button>
@@ -16,8 +16,15 @@
 <script>
     export default {
         methods: {
-            login () {
+            /*login () {
                 this.$router.replace('/')
+            }*/
+            login:function() {
+                //var userParams = this.$qs.stringify(this.User);
+                /* var userParams = JSON.stringify(this.User);*/
+                this.$axios.post("http://localhost:8011/login",this.user).then(res=>{
+                    alert(res.data);
+                });
             }
         },
         data () {

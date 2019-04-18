@@ -1,11 +1,15 @@
-package com.ebook.ebook;
+package com.ebook.entity;
 
-public class Detail{
-    String name,cname,writer,isbn,img;
+public class Book {
+    Integer id;
+    String name,cname,writer,brief,isbn,img;
     Integer storage,sales;
-    float price;
+    float price,rate;
     String book_intro,writer_intro,book_comment;
     public void Detail(){
+    }
+    public Integer getId(){
+        return id;
     }
     public String getName(){
         return name;
@@ -16,6 +20,9 @@ public class Detail{
     public String getWriter(){
         return writer;
     }
+    public String getBrief(){
+        return brief;
+    }
     public String getIsbn(){
         return isbn;
     }
@@ -24,6 +31,9 @@ public class Detail{
     }
     public float getPrice(){
         return price;
+    }
+    public float getRate(){
+        return rate;
     }
     public Integer getStorage(){
         return storage;
@@ -41,6 +51,9 @@ public class Detail{
         return book_comment;
     }
 
+    public void setId(Integer id){
+        this.id = id;
+    }
     public void setName(String name){
         this.name = name;
     }
@@ -50,6 +63,9 @@ public class Detail{
     public void setWriter(String writer){
         this.writer = writer;
     }
+    public void setBrief(String brief){
+        this.brief = brief;
+    }
     public void setIsbn(String isbn){
         this.isbn = isbn;
     }
@@ -58,6 +74,9 @@ public class Detail{
     }
     public void setPrice(float price) {
         this.price = price;
+    }
+    public void setRate(float rate){
+        this.rate = rate;
     }
     public void setStorage(Integer storage){
         this.storage = storage;
