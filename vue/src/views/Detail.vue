@@ -73,6 +73,25 @@
             }
         },
         props:['Name','Book'],
+        /*
+        methods:{
+            loadData: function() {
+                var that = this;
+                axios.get('http://localhost:8889/user/list')
+                    .then(function (response) {
+                        var data = response.data;
+                        that.users = data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        },
+        mounted: function() {
+            // 页面加载执行方法
+            this.loadData();
+        }
+        */
     }
 </script>
 <style scoped>
