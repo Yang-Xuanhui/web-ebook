@@ -201,6 +201,23 @@
             }
         },
         methods:{
+            /* 从后端get书籍详情 */
+            loadData: function(id) {
+                this.$http.get('http://localhost:8011/detail',{params:{id:id}})
+                    .then((response) =>{
+                        let book = response.data;
+                        let image = require("../static/img/"+book.img);
+                        //console.log(book)
+                        //console.log(response.data);
+                        /* 路由，跳转到对应详情页*/
+                        this.$router.push({ name: 'detail', params: { Book: book, Image: image}});
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })
+
+            },
+
             /* 升降序切换*/
             setOrder :function(type) {
                 let order = this.Sort.order;
@@ -255,21 +272,7 @@
             Delete(index){
                 this.orderedBooks.splice(index,1);
             },
-            loadData: function(id) {
-                this.$http.get('http://localhost:8011/detail',{params:{id:id}})
-                    .then((response) =>{
-                        let book = response.data;
-                        let image = require("../static/img/"+book.img);
-                        //console.log(book)
-                        //console.log(response.data);
-                        /* 路由，跳转到对应详情页*/
-                        this.$router.push({ name: 'detail', params: { Book: book, Image: image}});
-                    })
-                    .catch((err)=>{
-                        console.log(err)
-                    })
 
-            }
         },
         computed: {
             /* 图书排序并筛选*/

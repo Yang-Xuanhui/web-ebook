@@ -1,15 +1,23 @@
 package com.ebook.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name="books")
+@Entity
 public class Book {
-    Integer id;
+    @Id
+    Integer bid;
     String name,cname,writer,brief,isbn,img;
     Integer storage,sales;
-    float price,rate;
+    Double price,rate;
     String book_intro,writer_intro,book_comment;
-    public void Detail(){
+    Boolean isDelete;
+    public void Book(){
     }
-    public Integer getId(){
-        return id;
+    public Integer getBid(){
+        return bid;
     }
     public String getName(){
         return name;
@@ -29,10 +37,10 @@ public class Book {
     public String getImg(){
         return img;
     }
-    public float getPrice(){
+    public Double getPrice(){
         return price;
     }
-    public float getRate(){
+    public Double getRate(){
         return rate;
     }
     public Integer getStorage(){
@@ -50,9 +58,12 @@ public class Book {
     public String getBook_comment(){
         return book_comment;
     }
+    public Boolean getIsDelete(){
+        return isDelete;
+    }
 
-    public void setId(Integer id){
-        this.id = id;
+    public void setBid(Integer id){
+        this.bid = id;
     }
     public void setName(String name){
         this.name = name;
@@ -72,10 +83,10 @@ public class Book {
     public void setImg(String img){
         this.img = img;
     }
-    public void setPrice(float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
-    public void setRate(float rate){
+    public void setRate(Double rate){
         this.rate = rate;
     }
     public void setStorage(Integer storage){
@@ -90,7 +101,10 @@ public class Book {
     public void setWriter_intro(String writer_intro){
         this.writer_intro = writer_intro;
     }
-    public void setBook_omment(String comment){
+    public void setBook_comment(String comment){
         this.book_comment = comment;
+    }
+    public void setIsDelete(Boolean isDelete){
+        this.isDelete = isDelete;
     }
 }

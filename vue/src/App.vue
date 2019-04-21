@@ -4,7 +4,7 @@
           <img id="logo" src="./assets/logo.png"/>
           <span>E-BOOK</span>
       </el-header>
-      <el-main>
+      <el-main id="main">
           <el-row type="flex" justify="space-between">
           <el-col :span="24">
               <el-menu router
@@ -85,6 +85,7 @@ export default {
 #login{
     float: right;
 }
+
 ul
 {
   list-style:none;
