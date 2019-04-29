@@ -9,23 +9,24 @@ import com.ebook.entity.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findAll();
 
-    List<Order> findByOid(Integer oid);
+    Order findByOid(Integer oid);
 
-    List<Order> findByUid(Integer uid);
+    List<Order> findByUser_Uid(Integer uid);
 
-    List<Order> findByUidAndDateBetween(Integer uid, Date date1, Date date2);
+    List<Order> findByUser_UidAndDateBetween(Integer uid, Timestamp date1, Timestamp date2);
 
-    List<Order> findByDateBetween(Date date1, Date date2);
+    List<Order> findByDateBetween(Timestamp date1, Timestamp date2);
 
     @Transactional
     @Modifying
-    @Query(value = "delete from orders where oid= ?1", nativeQuery = true)
-    void deleteByOid(Integer oid);
+    @Query(value = "update orders set isDelete=true where oid= ?1", nativeQuery = true)
+    Integer update(Integer oid);
 }
 

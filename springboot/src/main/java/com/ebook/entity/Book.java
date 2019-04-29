@@ -8,12 +8,12 @@ import javax.persistence.Table;
 @Entity
 public class Book {
     @Id
-    Integer bid;
-    String name,cname,writer,brief,isbn,img;
-    Integer storage,sales;
-    Double price,rate;
-    String book_intro,writer_intro,book_comment;
-    Boolean isDelete;
+    private Integer bid;
+    private String name,cname,writer,brief,isbn,img;
+    private Integer storage,sales;
+    private Double price,rate;
+    private String book_intro,writer_intro,book_comment;
+    private Boolean isdelete;
     public void Book(){
     }
     public Integer getBid(){
@@ -59,7 +59,7 @@ public class Book {
         return book_comment;
     }
     public Boolean getIsDelete(){
-        return isDelete;
+        return isdelete;
     }
 
     public void setBid(Integer id){
@@ -105,6 +105,6 @@ public class Book {
         this.book_comment = comment;
     }
     public void setIsDelete(Boolean isDelete){
-        this.isDelete = isDelete;
+        this.isdelete = isDelete;
     }
 }

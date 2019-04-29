@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ebook.repository.OrderItemRepository;
 import com.ebook.entity.OrderItem;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,9 +17,11 @@ public class OrderItemService{
     private OrderItemRepository orderItemRepository;
 
     public List<OrderItem> FindbyOrder(Integer o_id) {
-        return orderItemRepository.findByOid(o_id);
+        return orderItemRepository.findByOrder_Oid(o_id);
     }
+
+    @Transactional
     public void save(OrderItem orderitem) {
-        orderItemRepository.save(orderitem);
+        orderItemRepository.saveAndFlush(orderitem);
     }
 }

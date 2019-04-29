@@ -23,7 +23,7 @@
         methods:{
         },
         beforeCreate:function () {
-            this.$http.get('http://localhost:8011/booklist')
+            this.$axios.get('http://localhost:8011/books/booklist')
                 .then((response) =>{
                     let books = response.data;
 

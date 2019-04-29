@@ -92,16 +92,27 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post("http://localhost:8011/register",this.ruleForm).then(res=>{
+                        this.$axios.post("http://localhost:8011/users/register",this.ruleForm)
+                            .then(res=>{
                             if(res.data === true){
-                                alert("注册成功");
+                                this.$notify({
+                                    title: '成功',
+                                    message: '注册成功',
+                                    type: 'success'
+                                });
                                 this.$router.push({ name: 'login'});
                             }
                             else{
-                                alert("注册失败，请重新注册");
+                                this.$notify.error({
+                                    title: '错误',
+                                    message: "注册失败，用户名已被使用"
+                                });
                                 this.$refs[formName].resetFields();
                             }
-                        });
+                        })
+                            .catch((err)=>{
+                                console.log(err)
+                            });
                     } else {
                         console.log('error submit!');
                         return false;

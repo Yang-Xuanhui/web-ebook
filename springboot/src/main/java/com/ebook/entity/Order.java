@@ -2,6 +2,7 @@ package com.ebook.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,40 +11,43 @@ import java.util.List;
 @Entity
 public class Order{
     @Id
-    public Integer oid;
+    @Column(name="oid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer oid;
     @JoinColumn(name="uid")
     @ManyToOne(fetch=FetchType.LAZY, targetEntity = User.class, cascade = CascadeType.MERGE)
-    public Integer uid;
-    public Date date;
-    @OneToMany(mappedBy="id")
-    private List<OrderItem> list = new ArrayList<OrderItem>();
+    private User user;
+    private Timestamp date;
+    private Boolean isdelete;
 
     public void Order(){}
+
+
 
     public Integer getOid(){
         return oid;
     }
-    public  Integer getUid(){
-        return uid;
+    public  User getUser(){
+        return user;
     }
-    public  Date getDate(){
+    public  Timestamp getDate(){
         return date;
+    }
+    public Boolean getIsdelete(){
+        return isdelete;
     }
 
     public void setOid(Integer id){
         this.oid = id;
     }
-    public void setUid(Integer id){
-        this.uid = id;
+    public void setUser(User user){
+        this.user = user;
     }
-    public void setDate(Date date){
+    public void setDate(Timestamp date){
         this.date = date;
     }
+    public void setIsdelete(Boolean isDelete){
+        this.isdelete = isDelete;
+    }
 
-    public List<OrderItem> getList() {
-        return list;
-    }
-    public void setList(List<OrderItem> list) {
-        this.list = list;
-    }
 }

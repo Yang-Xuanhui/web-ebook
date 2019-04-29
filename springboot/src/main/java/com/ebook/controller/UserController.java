@@ -3,9 +3,12 @@ package com.ebook.controller;
 
 import com.ebook.entity.User;
 import com.ebook.service.UserService;
+import com.ebook.utils.CookieUtils;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/users")
@@ -41,16 +44,16 @@ public class UserController{
 
     @RequestMapping(value="/login",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Integer userLogin(@RequestBody JSONObject user){
+    public Integer userLogin(@RequestBody JSONObject user, HttpServletResponse response){
         User user1;
         String username = (String) user.get("username");
         String password = (String) user.get("password");
         if((user1 = userService.FindNameAndPsw(username,password)) != null){
             /* USER */
             if(user1.getRole()==1){
-                /* 是否被禁用 */
+                /* 未被禁用 */
                 if(user1.getEnable()==1){
-                    /* 未被禁用 */
+                    //CookieUtils.writeCookie(response,username,user1.getUsername());
                     return 1;
                 }
                 /* 被禁用 */
@@ -64,7 +67,8 @@ public class UserController{
         else
             return 0;
     }
-/*
+
+    /*
     @RequestMapping(value="/ban",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Boolean ban(@RequestBody JSONObject infor){

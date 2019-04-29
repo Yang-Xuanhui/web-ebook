@@ -7,7 +7,7 @@
         <div>
             <el-row>
                 <el-col :span="6">
-                    <img class="cover" :src='image'/>
+                    <img class="cover" :src="require('../static/img/'+book.img)"/>
                 </el-col>
                 <el-col :span="14" class="book-infor">
                     <ul>
@@ -35,12 +35,13 @@
                                     </div>
                                     <el-row>
                                         <el-col :span="12">
-                                            <el-input-number v-model="orderitems.number"
+                                            <el-input-number v-model="book.amount"
                                                              :min="0" :max=book.storage label="number"
                                                               class="input-number"></el-input-number>
                                         </el-col>
                                         <el-col :span="12">
-                                            <el-button round type="success">加入购物车</el-button>
+                                            <el-button round type="success"
+                                                       @click="addToCart(book.bid,book.amount)">加入购物车</el-button>
                                         </el-col>
                                     </el-row>
                                 </el-col>
@@ -65,20 +66,21 @@
 </template>
 
 <script>
+    import {addCart} from "../api/cartApi";
+
     export default {
         data(){
             return{
-                image:this.$route.params.Image,
                 book: this.$route.params.Book,
-                orderitems:{
-                    number:0
-                },
             }
         },
-        props:['Image','Book'],
+        props:['Book'],
         computed:{
         },
         methods:{
+            addToCart:function(bid,amount){
+                addCart(bid,amount,this);
+            },
         },
     }
 </script>

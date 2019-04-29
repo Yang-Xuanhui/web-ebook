@@ -9,6 +9,8 @@ import com.ebook.entity.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,22 +19,51 @@ public class OrderService{
     @Autowired
     private OrderRepository orderRepository;
 
+    /* find orders without time range */
     public List<Order> FindByUser(Integer u_id) {
-        return orderRepository.findByUid(u_id);
+        List<Order> orders = orderRepository.findByUser_Uid(u_id);
+        return filter(orders);
     }
     public List<Order> FindAll(){ return orderRepository.findAll();}
-    @Transactional
-    public void DeleteById(Integer id){ orderRepository.deleteByOid(id);}
-    public List<Order> FindById(Integer id){
+
+    /* find the exact order with id */
+    public Order FindById(Integer id){
         return orderRepository.findByOid(id);
     }
-    public List<Order> FindbyUserAndDate(Integer u_id, Date date1,Date date2) {
-        return orderRepository.findByUidAndDateBetween(u_id,date1,date2);
+
+    /* find orders with given time range */
+    /* for user */
+    public List<Order> FindByUserAndDate(Integer u_id, Timestamp date1, Timestamp date2) {
+        List<Order> orders =  orderRepository.findByUser_UidAndDateBetween(u_id,date1,date2);
+        return filter(orders);
     }
-    public List<Order> FindbyDate(Date date1,Date date2) {
+    /* for admin */
+    public List<Order> FindByDate(Timestamp date1,Timestamp date2) {
         return orderRepository.findByDateBetween(date1,date2);
     }
-    public void save(Order order1) {
-        orderRepository.save(order1);
+
+    /* save */
+    public Order save(Order order1) {
+        return orderRepository.save(order1);
+    }
+    public Order saveAndFlush(Order order){
+        return orderRepository.saveAndFlush(order);
+    }
+
+    /* update value of isDelete */
+    @Transactional
+    public Integer Delete(Integer id){
+        return orderRepository.update(id);
+    }
+
+    /* ignore orders which are deleted */
+    private List<Order> filter(List<Order> orders){
+        List<Order> neworders = new ArrayList<>();
+        for(Order order : orders){
+            if(!order.getIsdelete()){
+                neworders.add(order);
+            }
+        }
+        return neworders;
     }
 }

@@ -7,27 +7,29 @@ import javax.persistence.*;
 @Entity
 public class OrderItem{
     @Id
-    public Integer id;
+    private Integer id;
     @JoinColumn(name="oid")
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity = Order.class, cascade = CascadeType.MERGE)
-    public Integer oid;
-    public Integer bid;
-    public Integer number;
-    public Double price;
+    @ManyToOne(targetEntity = Order.class)
+    private Order order;
+    @JoinColumn(name="bid")
+    @ManyToOne(targetEntity = Book.class)
+    private Book book;
+    private Integer amount;
+    private Double price;
 
     public void OrderItem(){}
 
     public Integer getId(){
         return id;
     }
-    public Integer getOid(){
-        return oid;
+    public Order getOrder(){
+        return order;
     }
-    public  Integer getBid(){
-        return bid;
+    public  Book getBook(){
+        return book;
     }
-    public  Integer getnumber(){
-        return number;
+    public  Integer getAmount(){
+        return amount;
     }
     public Double getPrice(){
         return price;
@@ -36,14 +38,14 @@ public class OrderItem{
         this.id = id;
     }
 
-    public void setOid(Integer id){
-        this.oid = id;
+    public void setOrder(Order order){
+        this.order = order;
     }
-    public void setBid(Integer id){
-        this.bid = id;
+    public void setBook(Book book){
+        this.book = book;
     }
-    public void setNumber(Integer number){
-        this.number = number;
+    public void setAmount(Integer amount){
+        this.amount = amount;
     }
     public void setPrice(Double price){
         this.price = price;

@@ -4,46 +4,64 @@ import com.ebook.entity.Book;
 import com.ebook.service.BookService;
 import com.ebook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import net.sf.json.JSONObject;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.Map.Entry;
 
 @RestController
 @RequestMapping("/books")
 public class BookController {
     @Autowired
     BookService bookService;
+    @Autowired
+    UserService userService;
     @RequestMapping("/booklist")
     public List<Book> getList(){
-        List<Book> booklist=bookService.ListBook();
-        return booklist;
+        return bookService.ListBook();
     }
+
     @RequestMapping("/detail")
     public Book getDetail(String name){
         /*从数据库获取数据*/
-        Book book = bookService.FindBook(name);
-        return book;
-    }
-    @RequestMapping(value="/add",method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
-    @ResponseBody
-    public String addBook(@RequestBody JSONObject book){
-        String name = book.getString("name");
-        if(bookService.FindBook(name)==null){
-            Book newbook = saveBook(book);
-            bookService.save(newbook);
-            return "true";
-        }
-        else
-            return "false";
+        return bookService.FindBook(name);
     }
 
+    /* for admin only */
+    @RequestMapping(value="/add",method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
+    @ResponseBody
+    public String addBook(@RequestBody JSONObject book, HttpServletRequest request){
+        if(!userService.isAdmin(request)){
+            return "no permission";
+        }
+        String name = book.getString("name");
+        Book oldbook;
+        if((oldbook = bookService.FindBook(name))==null){
+            Book newbook = saveBook(book);
+            bookService.save(newbook);
+            return "add book";
+        }
+        else{
+            if(oldbook.getIsDelete()){
+                bookService.deleteById(oldbook.getBid());
+                Book newbook = saveBook(book);
+                bookService.save(newbook);
+                return "add book";
+            }
+            return "add book fail";
+        }
+
+    }
+
+    /* for admin only */
     @RequestMapping(value="/delete",method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
     @ResponseBody
-    public String deleteBook(@RequestBody JSONObject book){
+    public String deleteBook(@RequestBody JSONObject book,HttpServletRequest request){
+        if(!userService.isAdmin(request)){
+            return "no permission";
+        }
         Book book1;
         if((book1 = bookService.FindBook(book.getString("name")))!=null){
             book1.setIsDelete(true);
@@ -54,13 +72,17 @@ public class BookController {
             return "false";
     }
 
+    /* for admin only */
     @RequestMapping(value="/update",method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
     @ResponseBody
-    public String updateBook(@RequestBody JSONObject book){
+    public String updateBook(@RequestBody JSONObject book,HttpServletRequest request){
+        if(!userService.isAdmin(request)){
+            return "no permission";
+        }
         String name = book.getString("name");
         Book oldbook;
         if((oldbook = bookService.FindBook(name))!=null){
-            bookService.DeleteById(oldbook.getBid());
+            bookService.deleteById(oldbook.getBid());
             Book book1 = saveBook(book);
             bookService.save(book1);
             return "true";

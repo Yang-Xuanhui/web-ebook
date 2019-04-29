@@ -7,16 +7,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    List<Book> findByIsDeleteFalse();
+    List<Book> findByIsdeleteFalse();
     Book findByBid(Integer id);
     Book findByName(String name);
-    @Transactional
+
     @Modifying
     @Query(value = "delete from books where bid= ?1", nativeQuery = true)
-    void deleteByBid(Integer bid);
+    Integer deleteByBid(Integer bid);
 
+    @Modifying
+    @Query(value = "update books set storage=?1 where bid=?2 ", nativeQuery = true)
+    Integer updateStorage(Integer storage,Integer bid);
+
+    @Modifying
+    @Query(value = "update books set sales=?1 where bid=?2 ", nativeQuery = true)
+    Integer updateSales(Integer salse,Integer bid);
 }

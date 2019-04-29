@@ -9,8 +9,8 @@ public class User{
     @Id
     public Integer uid;
     @Column(nullable = false, unique = true)
-    public String username;
-    public String email,password;
+    private String username;
+    private String email,password;
     private Integer role, enable;
 
 

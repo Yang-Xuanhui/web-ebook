@@ -35,11 +35,11 @@ export default new Router({
             name: 'order',
             component: () => import('./views/Order.vue')
         },
-        /*{
-            path: '/about',
-            name: 'about',
-            component: () => import('./views/About.vue')
-        },*/
+        {
+            path: '/statistics',
+            name: 'statistics',
+            component: () => import('./views/Statistics.vue')
+        },
         {
             path: '/login',
             name: 'login',
