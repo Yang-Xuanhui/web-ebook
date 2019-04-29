@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "echarts": "^4.2.1",
     "element-ui": "^2.4.5",
     "lodash.chunk": "^4.2.0",
     "vue": "^2.6.6",

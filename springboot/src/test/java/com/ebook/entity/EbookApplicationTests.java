@@ -1,4 +1,4 @@
-package com.ebook.ebook;
+package com.ebook.entity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

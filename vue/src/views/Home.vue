@@ -19,7 +19,7 @@
                 imgs:[
                     {
                         Name:"white",
-                        src: require('../static/img/white.jpg')
+                        src: require('../static/img/whiteNights.jpg')
                     },
                     {
                         Name:"renjianshige",

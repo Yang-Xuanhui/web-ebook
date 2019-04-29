@@ -21,7 +21,7 @@ export default new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/Brief.vue')
         },
         {
-            path: '/detail/:Name',
+            path: '/detail/:Book.id',
             name: 'detail',
             component: () => import('./views/Detail.vue'),
         },
@@ -35,15 +35,20 @@ export default new Router({
             name: 'order',
             component: () => import('./views/Order.vue')
         },
-        /*{
-            path: '/about',
-            name: 'about',
-            component: () => import('./views/About.vue')
-        },*/
+        {
+            path: '/statistics',
+            name: 'statistics',
+            component: () => import('./views/Statistics.vue')
+        },
         {
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: ()=>import('./views/Register.vue')
         }
     ]
 })

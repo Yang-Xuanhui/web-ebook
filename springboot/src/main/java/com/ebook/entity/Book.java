@@ -1,11 +1,23 @@
-package com.ebook.ebook;
+package com.ebook.entity;
 
-public class Detail{
-    String name,cname,writer,isbn,img;
-    Integer storage,sales;
-    float price;
-    String book_intro,writer_intro,book_comment;
-    public void Detail(){
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name="books")
+@Entity
+public class Book {
+    @Id
+    private Integer bid;
+    private String name,cname,writer,brief,isbn,img;
+    private Integer storage,sales;
+    private Double price,rate;
+    private String book_intro,writer_intro,book_comment;
+    private Boolean isdelete;
+    public void Book(){
+    }
+    public Integer getBid(){
+        return bid;
     }
     public String getName(){
         return name;
@@ -16,14 +28,20 @@ public class Detail{
     public String getWriter(){
         return writer;
     }
+    public String getBrief(){
+        return brief;
+    }
     public String getIsbn(){
         return isbn;
     }
     public String getImg(){
         return img;
     }
-    public float getPrice(){
+    public Double getPrice(){
         return price;
+    }
+    public Double getRate(){
+        return rate;
     }
     public Integer getStorage(){
         return storage;
@@ -40,7 +58,13 @@ public class Detail{
     public String getBook_comment(){
         return book_comment;
     }
+    public Boolean getIsDelete(){
+        return isdelete;
+    }
 
+    public void setBid(Integer id){
+        this.bid = id;
+    }
     public void setName(String name){
         this.name = name;
     }
@@ -50,14 +74,20 @@ public class Detail{
     public void setWriter(String writer){
         this.writer = writer;
     }
+    public void setBrief(String brief){
+        this.brief = brief;
+    }
     public void setIsbn(String isbn){
         this.isbn = isbn;
     }
     public void setImg(String img){
         this.img = img;
     }
-    public void setPrice(float price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+    public void setRate(Double rate){
+        this.rate = rate;
     }
     public void setStorage(Integer storage){
         this.storage = storage;
@@ -71,7 +101,10 @@ public class Detail{
     public void setWriter_intro(String writer_intro){
         this.writer_intro = writer_intro;
     }
-    public void setBook_omment(String comment){
+    public void setBook_comment(String comment){
         this.book_comment = comment;
+    }
+    public void setIsDelete(Boolean isDelete){
+        this.isdelete = isDelete;
     }
 }
