@@ -4,7 +4,6 @@ import com.ebook.entity.Book;
 import com.ebook.entity.Order;
 import com.ebook.entity.OrderItem;
 import com.ebook.entity.User;
-import com.ebook.service.OrderItemService;
 import com.ebook.service.OrderService;
 import com.ebook.service.UserService;
 import net.sf.json.JSONObject;
@@ -28,11 +27,9 @@ import java.util.Map;
 @RequestMapping("/orders")
 public class OrderController{
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    OrderService orderService;
-    @Autowired
-    OrderItemService orderItemService;
+    private OrderService orderService;
 
     /* 删除订单
      * 用户删除自己的订单，但是删除后的订单仍然可以被管理员看到
@@ -42,7 +39,7 @@ public class OrderController{
     @ResponseBody
     public List<Map<String,Object>> deleteOrder(@RequestBody JSONObject obj,HttpServletRequest request){
         Integer id = obj.getInt("oid");
-        orderService.Delete(id);
+        orderService.deleteOrder(id);
         /* 重新返回orders */
         return readOrder(obj,request);
     }
@@ -65,12 +62,12 @@ public class OrderController{
         if(s_start.equals("") || s_end.equals("")){
             /* 管理员 */
             if(user != null && user.getRole()==0){
-                orders = orderService.FindAll();
+                orders = orderService.findAll();
                 return getOrder(orders);
             }
             /* 未被禁用的用户 */
             else if(user!=null && user.getRole()==1 && user.getEnable()==1) {
-                orders = orderService.FindByUser(user.getUid());
+                orders = orderService.findByUser(user.getUid());
                 return getOrder(orders);
             }
             else return null;
@@ -81,12 +78,12 @@ public class OrderController{
 
         /* 管理员 */
         if(user != null && user.getRole()==0){
-            orders = orderService.FindByDate(start,end);
+            orders = orderService.findByDate(start,end);
             return getOrder(orders);
         }
         /* 未被禁用的用户 */
         else if(user!=null && user.getRole()==1 && user.getEnable()==1) {
-            orders = orderService.FindByUserAndDate(user.getUid(),start,end);
+            orders = orderService.findByUserAndDate(user.getUid(),start,end);
             return getOrder(orders);
         }
         else return null;
@@ -103,7 +100,7 @@ public class OrderController{
             Map<String,Object> lists= new HashMap<>();
             List<Map<String,Object>> items = new ArrayList<>();
             /* 获取一份订单中的详情 */
-            List<OrderItem> list = orderItemService.FindbyOrder(order.getOid());
+            List<OrderItem> list = orderService.findItems(order.getOid());
             /* 订单总金额 */
             Double total = 0.0;
             /* 遍历订单详情 */

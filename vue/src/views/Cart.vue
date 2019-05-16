@@ -105,7 +105,9 @@
             }
         },
         created: function () {
-            listCart(this)
+            if(this.isLogin){
+                listCart(this)
+            }
         },
         methods:{
             getDetail:function(name){

@@ -19,7 +19,7 @@
                 <p>没有可查看的订单</p>
             </div>
             <div v-show="!isEmpty">
-                <div v-show="date" class="orderInfo"><span>{{this.startDate}}-{{this.endDate}}</span>  共消费
+                <div v-show="date" class="orderInfo">累计消费
                     <span>{{this.money}}</span> 元</div>
                 <el-card class="order-card"
                          v-for="(order) in list.orders"

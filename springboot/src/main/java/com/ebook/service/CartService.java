@@ -9,40 +9,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public class CartService{
-    @Autowired
-    private CartRepository cartRepository;
-
+public interface CartService {
     /* read */
-    public List<Cart> FindbyUser(Integer uid) {
-        return cartRepository.findByUser_Uid(uid);
-    }
-    public Cart FindbyId(Integer cid) {
-        return cartRepository.findByCid(cid);
-    }
-    public Cart FindCart(Integer uid,Integer bid){
-        return cartRepository.findByUser_UidAndBook_Bid(uid,bid);
-    }
+    List<Cart> findbyUser(Integer uid);
+
+    Cart findbyId(Integer cid);
+
+    Cart findCart(Integer uid, Integer bid);
 
     /* create */
-    public void save(Cart cart) {
-        cartRepository.save(cart);
-    }
+    void save(Cart cart);
 
     /* delete */
-    @Transactional
-    public Integer Delete(Integer cid){
-        return cartRepository.deleteByCid(cid);
-    }
-    @Transactional
-    public Integer Delete(Integer uid,Integer bid){
-        return cartRepository.deleteByUidAndBid(uid,bid);
-    }
+    Integer deleteById(Integer cid);
+
+    Integer deleteByUser(Integer uid, Integer bid);
 
     /* update */
-    @Transactional
-    public Integer updateAmount(Integer amount, Integer cid){
-        return cartRepository.updateAmount(amount,cid);
-    }
+    Integer updateAmount(Integer amount, Integer cid);
 }
