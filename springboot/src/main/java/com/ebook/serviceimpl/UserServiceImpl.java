@@ -40,27 +40,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Integer enable(String username){
+    public Integer enableOrBan(String username){
         User user = userDao.findByUsername(username);
         if(user.getEnable()==0){
-            userDao.updateByUsername(0,username);
+            userDao.updateByUsername(1,username);
             return 1;
         }
         else{
-            return 0;
-        }
-    }
-
-    @Override
-    @Transactional
-    public Integer ban(String username){
-        User user = userDao.findByUsername(username);
-        if(user.getEnable()==1){
             userDao.updateByUsername(0,username);
             return 1;
-        }
-        else{
-            return 0;
         }
     }
 
@@ -73,7 +61,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean isAdmin(HttpServletRequest request){
         User user = getUser(request);
-        return user.getUsername().equals("admin");
+        return (user.getRole()==0);
     }
 
     @Override

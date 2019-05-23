@@ -10,8 +10,7 @@ public interface UserService{
 
     void save(User user1);
 
-    Integer enable(String username);
-    Integer ban(String username);
+    Integer enableOrBan(String username);
 
     User getUser(HttpServletRequest request);
 

@@ -71,34 +71,18 @@ public class UserController{
     public String banUser(@RequestBody JSONObject user, HttpServletRequest request){
         if(userService.isAdmin(request)){
             String username = user.getString("username");
-            Integer status = userService.ban(username);
-            if(status==1){
+            User u = userService.findUser(username);
+            Integer enable = u.getEnable();
+            userService.enableOrBan(username);
+            if(enable==1){
                 return "禁用用户";
             }
             else{
-                return "该用户已被禁用";
+                return "解禁用户";
             }
         }
         else{
-            return "没有禁用用户的权限";
-        }
-    }
-
-    @RequestMapping(value="/free",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String freeUser(@RequestBody JSONObject user,HttpServletRequest request){
-        if(userService.isAdmin(request)){
-            String username = user.getString("username");
-            Integer status = userService.enable(username);
-            if(status==1){
-                return "接触禁用";
-            }
-            else{
-                return "该用户未被禁用";
-            }
-        }
-        else{
-            return "没有解禁用户的权限";
+            return "没有管理用户的权限";
         }
     }
 }
