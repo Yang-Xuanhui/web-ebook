@@ -73,8 +73,8 @@ export default {
                 // 强制刷新页面
                 this.$router.go(0);
                 this.$router.replace('/login');
-
             }
+
             else if(command==="logout"){
                 alert("Goodbye "+getCookie("username"));
                 clearCookie();
@@ -82,11 +82,6 @@ export default {
                 this.$router.replace('/');
 
             }
-        }
-    },
-    data () {
-        return {
-
         }
     },
     computed:{

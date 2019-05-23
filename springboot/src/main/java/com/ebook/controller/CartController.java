@@ -19,21 +19,19 @@ import java.util.*;
 @RequestMapping("/carts")
 public class CartController{
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     @Autowired
-    OrderItemService orderItemService;
+    private BookService bookService;
     @Autowired
-    BookService bookService;
+    private CartService cartService;
     @Autowired
-    CartService cartService;
-    @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value="/list",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<Map<String,Object>> list(HttpServletRequest request){
         User user = userService.getUser(request);
-        List<Cart> carts = cartService.FindbyUser(user.getUid());
+        List<Cart> carts = cartService.findbyUser(user.getUid());
         /* 购物车为空 */
         if(carts==null){
             return null;
@@ -64,21 +62,21 @@ public class CartController{
         if(user!=null && user.getEnable()==1){
             Integer bid = cart.getInt("book_id");
             Integer amount = cart.getInt("amount");
-            Book book = bookService.FindBookById(bid);
-            Cart oldcart = cartService.FindCart(user.getUid(),book.getBid());
+            Book book = bookService.findBook(bid);
+            Cart oldcart = cartService.findCart(user.getUid(),book.getBid());
             if(oldcart != null){
                 cartService.updateAmount(oldcart.getAmount()+amount,oldcart.getCid());
-                return "add to cart";
+                return "加入购物车";
             }
-            Cart newcart = new Cart();
 
+            Cart newcart = new Cart();
             if(!book.getIsDelete() && book.getStorage()>=amount){
                 newcart.setCid(0);
                 newcart.setUser(user);
                 newcart.setBook(book);
                 newcart.setAmount(amount);
                 cartService.save(newcart);
-                return "add to cart";
+                return "加入购物车";
             }
             else if(book.getStorage()<amount){
                 newcart.setCid(0);
@@ -103,7 +101,7 @@ public class CartController{
         JSONArray cartArray = obj.getJSONArray("cartlist");
         Integer i =0;
         for(i=0;i<cartArray.size();i++){
-            cartService.Delete(cartArray.getInt(i));
+            cartService.deleteById(cartArray.getInt(i));
         }
         return list(request);
     }
@@ -140,7 +138,7 @@ public class CartController{
         for(Integer i = 0;i<cartArray.size();i++) {
             JSONObject cartObj = cartArray.getJSONObject(i);
             Integer cid = cartObj.getInt("cart_id");
-            Cart cart = cartService.FindbyId(cid);
+            Cart cart = cartService.findbyId(cid);
             Integer number = cartObj.getInt("amount");
             Book book = cart.getBook();
             if (book.getIsDelete()) {
@@ -158,17 +156,17 @@ public class CartController{
             orderItem.setBook(book);
             orderItem.setAmount(number);
             orderItem.setPrice(book.getPrice());
-            orderItemService.save(orderItem);
+            orderService.save(orderItem);
             countOrder++;
             // 从cart中删除
-            cartService.Delete(user.getUid(), book.getBid());
+            cartService.deleteByUser(user.getUid(), book.getBid());
 
             // 更新book库存和销量信息
             bookService.updateSales(book.getSales() + number, book.getBid());
             bookService.updateStorage(book.getStorage() - number, book.getBid());
         }
         if(countOrder==0){
-            orderService.Delete(neworder.getOid());
+            orderService.deleteOrder(neworder.getOid());
         }
         return list(request);
     }

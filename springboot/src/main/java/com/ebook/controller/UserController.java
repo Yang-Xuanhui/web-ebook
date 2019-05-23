@@ -3,19 +3,17 @@ package com.ebook.controller;
 
 import com.ebook.entity.User;
 import com.ebook.service.UserService;
-import com.ebook.utils.CookieUtils;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/users")
 public class UserController{
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value="/register",method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
     @ResponseBody
@@ -26,7 +24,7 @@ public class UserController{
         String username = (String) user.get("username");
         String email = (String) user.get("email");
         String password = (String) user.get("password");
-        if(!hasUser(username)){
+        if(!userService.hasUser(username)){
             User user1 = new User();
             user1.setUsername(username);
             user1.setEmail(email);
@@ -44,11 +42,11 @@ public class UserController{
 
     @RequestMapping(value="/login",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Integer userLogin(@RequestBody JSONObject user, HttpServletResponse response){
+    public Integer userLogin(@RequestBody JSONObject user){
         User user1;
         String username = (String) user.get("username");
         String password = (String) user.get("password");
-        if((user1 = userService.FindNameAndPsw(username,password)) != null){
+        if((user1 = userService.findNameAndPsw(username,password)) != null){
             /* USER */
             if(user1.getRole()==1){
                 /* 未被禁用 */
@@ -68,14 +66,23 @@ public class UserController{
             return 0;
     }
 
-    /*
     @RequestMapping(value="/ban",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Boolean ban(@RequestBody JSONObject infor){
-
-    }
-    */
-    private Boolean hasUser(String username) {
-        return (userService.findByName(username)!=null);
+    public String banUser(@RequestBody JSONObject user, HttpServletRequest request){
+        if(userService.isAdmin(request)){
+            String username = user.getString("username");
+            User u = userService.findUser(username);
+            Integer enable = u.getEnable();
+            userService.enableOrBan(username);
+            if(enable==1){
+                return "禁用用户";
+            }
+            else{
+                return "解禁用户";
+            }
+        }
+        else{
+            return "没有管理用户的权限";
+        }
     }
 }

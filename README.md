@@ -37,7 +37,8 @@ brief.html和detail.html有两种样式（css1.css、css2.css）
 
 ## 后端开发
 
-### **version 2.0**
+- ### **version 2.0**
+
 
 利用spring boot开发后端   *文件在 /springboot目录下*
 
@@ -51,3 +52,12 @@ brief.html和detail.html有两种样式（css1.css、css2.css）
 spring boot + JdbcTemplete 连接mysql数据库
 
 * 图书详情页的数据通过sql语句从数据库中查询得到
+
+### version 2.2
+
+第二次迭代
+
+- 前后端集成
+- 实现普通用户所有功能
+
+## 代码重构

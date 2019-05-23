@@ -15,18 +15,19 @@ import java.util.*;
 @RequestMapping("/books")
 public class BookController {
     @Autowired
-    BookService bookService;
+    private BookService bookService;
     @Autowired
-    UserService userService;
+    private UserService userService;
+
     @RequestMapping("/booklist")
     public List<Book> getList(){
-        return bookService.ListBook();
+        return bookService.listBook();
     }
 
     @RequestMapping("/detail")
     public Book getDetail(String name){
         /*从数据库获取数据*/
-        return bookService.FindBook(name);
+        return bookService.findBook(name);
     }
 
     /* for admin only */
@@ -34,23 +35,21 @@ public class BookController {
     @ResponseBody
     public String addBook(@RequestBody JSONObject book, HttpServletRequest request){
         if(!userService.isAdmin(request)){
-            return "no permission";
+            return "没有增加图书的权限";
         }
         String name = book.getString("name");
         Book oldbook;
-        if((oldbook = bookService.FindBook(name))==null){
-            Book newbook = saveBook(book);
-            bookService.save(newbook);
-            return "add book";
+        if((oldbook = bookService.findBook(name))==null){
+            bookService.saveBook(book);
+            return "成功增加书籍";
         }
         else{
             if(oldbook.getIsDelete()){
-                bookService.deleteById(oldbook.getBid());
-                Book newbook = saveBook(book);
-                bookService.save(newbook);
-                return "add book";
+                bookService.deleteBook(oldbook.getBid());
+                bookService.saveBook(book);
+                return "成功增加书籍";
             }
-            return "add book fail";
+            return "增加书籍失败，已有同名的书籍";
         }
 
     }
@@ -60,16 +59,16 @@ public class BookController {
     @ResponseBody
     public String deleteBook(@RequestBody JSONObject book,HttpServletRequest request){
         if(!userService.isAdmin(request)){
-            return "no permission";
+            return "无权限";
         }
         Book book1;
-        if((book1 = bookService.FindBook(book.getString("name")))!=null){
+        if((book1 = bookService.findBook(book.getString("name")))!=null){
             book1.setIsDelete(true);
-            bookService.save(book1);
-            return "true";
+            bookService.saveBook(book1);
+            return "删除成功";
         }
         else
-            return "false";
+            return "删除失败";
     }
 
     /* for admin only */
@@ -77,53 +76,16 @@ public class BookController {
     @ResponseBody
     public String updateBook(@RequestBody JSONObject book,HttpServletRequest request){
         if(!userService.isAdmin(request)){
-            return "no permission";
+            return "无权限";
         }
         String name = book.getString("name");
         Book oldbook;
-        if((oldbook = bookService.FindBook(name))!=null){
-            bookService.deleteById(oldbook.getBid());
-            Book book1 = saveBook(book);
-            bookService.save(book1);
-            return "true";
+        if((oldbook = bookService.findBook(name))!=null){
+            bookService.deleteBook(oldbook.getBid());
+            bookService.saveBook(book);
+            return "更新成功";
         }
         else
-            return "false";
-    }
-
-    private Book saveBook(JSONObject book){
-        Book newbook = new Book();
-
-        String name = book.getString("name");
-        String cname = book.getString("cname");
-        String writer = book.getString("writer");
-        String brief = book.getString("brief");
-        String img = book.getString("img");
-        String isbn = book.getString("isbn");
-        Double price = book.getDouble("price");
-        Double rate = book.getDouble("rate");
-        Integer storage = book.getInt("storage");
-        Integer sales = book.getInt("sales");
-        String book_intro = book.getString("book_intro");
-        String writer_intro = book.getString("writer_intro");
-        String book_comment = book.getString("book_comment");
-
-        newbook.setBid(0);
-        newbook.setName(name);
-        newbook.setCname(cname);
-        newbook.setWriter(writer);
-        newbook.setBrief(brief);
-        newbook.setImg(img);
-        newbook.setIsbn(isbn);
-        newbook.setPrice(price);
-        newbook.setRate(rate);
-        newbook.setSales(sales);
-        newbook.setStorage(storage);
-        newbook.setBook_intro(book_intro);
-        newbook.setWriter_intro(writer_intro);
-        newbook.setBook_comment(book_comment);
-        newbook.setIsDelete(false);
-
-        return newbook;
+            return "更新失败";
     }
 }
