@@ -1,9 +1,9 @@
 package com.ebook.serviceimpl;
 
+import com.ebook.dao.OrderDao;
+import com.ebook.dao.OrderItemDao;
 import com.ebook.entity.Order;
 import com.ebook.entity.OrderItem;
-import com.ebook.repository.OrderItemRepository;
-import com.ebook.repository.OrderRepository;
 import com.ebook.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,63 +16,63 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderDao orderDao;
     @Autowired
-    private OrderItemRepository orderItemRepository;
+    private OrderItemDao orderItemDao;
 
     /* find orders without time range */
     @Override
     public List<Order> findByUser(Integer u_id) {
-        List<Order> orders = orderRepository.findByUser_Uid(u_id);
+        List<Order> orders = orderDao.findByUser_Uid(u_id);
         return filter(orders);
     }
 
     @Override
     public List<Order> findAll(){
-        return orderRepository.findAll();
+        return orderDao.findAll();
     }
 
     /* find the exact order with id */
     @Override
     public Order findOrder(Integer id){
-        return orderRepository.findByOid(id);
+        return orderDao.findByOid(id);
     }
 
     @Override
     public List<OrderItem> findItems(Integer o_id) {
-        return orderItemRepository.findByOrder_Oid(o_id);
+        return orderItemDao.findByOrder_Oid(o_id);
     }
 
     /* find orders with given time range */
     /* for user */
     @Override
     public List<Order> findByUserAndDate(Integer u_id, Timestamp date1, Timestamp date2) {
-        List<Order> orders =  orderRepository.findByUser_UidAndDateBetween(u_id,date1,date2);
+        List<Order> orders =  orderDao.findByUser_UidAndDateBetween(u_id,date1,date2);
         return filter(orders);
     }
     /* for admin */
     @Override
     public List<Order> findByDate(Timestamp date1,Timestamp date2) {
-        return orderRepository.findByDateBetween(date1,date2);
+        return orderDao.findByDateBetween(date1,date2);
     }
 
     /* save */
     @Override
     public Order save(Order order1) {
-        return orderRepository.save(order1);
+        return orderDao.save(order1);
     }
 
     @Override
     @Transactional
     public void save(OrderItem orderitem) {
-        orderItemRepository.saveAndFlush(orderitem);
+        orderItemDao.saveAndFlush(orderitem);
     }
 
     /* update value of isDelete */
     @Override
     @Transactional
     public void deleteOrder(Integer id){
-        orderRepository.update(id);
+        orderDao.update(id);
     }
 
     /* ignore orders which are deleted */

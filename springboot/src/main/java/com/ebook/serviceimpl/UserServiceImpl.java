@@ -1,7 +1,7 @@
 package com.ebook.serviceimpl;
 
+import com.ebook.dao.UserDao;
 import com.ebook.entity.User;
-import com.ebook.repository.UserRepository;
 import com.ebook.service.UserService;
 import com.ebook.utils.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,34 +16,34 @@ import static java.lang.Boolean.TRUE;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserRepository userRepository;
+    private UserDao userDao;
 
     @Override
     public User findNameAndPsw(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
+        return userDao.findByUsernameAndPassword(username, password);
     }
 
     @Override
     public User findUser(String username) {
-        return userRepository.findByUsername(username);
+        return userDao.findByUsername(username);
     }
 
     @Override
     public User findUser(Integer id){
-        return userRepository.findByUid(id);
+        return userDao.findByUid(id);
     }
 
     @Override
     public void save(User user1) {
-        userRepository.save(user1);
+        userDao.save(user1);
     }
 
     @Override
     @Transactional
     public Integer enable(String username){
-        User user = userRepository.findByUsername(username);
+        User user = userDao.findByUsername(username);
         if(user.getEnable()==0){
-            userRepository.updateByUsername(0,username);
+            userDao.updateByUsername(0,username);
             return 1;
         }
         else{
@@ -54,9 +54,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Integer ban(String username){
-        User user = userRepository.findByUsername(username);
+        User user = userDao.findByUsername(username);
         if(user.getEnable()==1){
-            userRepository.updateByUsername(0,username);
+            userDao.updateByUsername(0,username);
             return 1;
         }
         else{
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean hasUser(String username){
-        if(userRepository.findByUsername(username)!= null){
+        if(userDao.findByUsername(username)!= null){
             return TRUE;
         }
         else{

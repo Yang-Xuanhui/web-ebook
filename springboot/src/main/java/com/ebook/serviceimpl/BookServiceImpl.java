@@ -1,7 +1,7 @@
 package com.ebook.serviceimpl;
 
+import com.ebook.dao.BookDao;
 import com.ebook.entity.Book;
-import com.ebook.repository.BookRepository;
 import com.ebook.service.BookService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,28 +12,28 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
     @Autowired
-    private BookRepository bookRepository;
+    private BookDao bookDao;
 
     /* read */
     @Override
     public Book findBook(String name) {
-        return bookRepository.findByName(name);
+        return bookDao.findByName(name);
     }
 
     @Override
     public Book findBook(Integer id) {
-        return bookRepository.findByBid(id);
+        return bookDao.findByBid(id);
     }
 
     @Override
     public List<Book> listBook(){
-        return bookRepository.findByIsdeleteFalse();
+        return bookDao.findByIsdeleteFalse();
     }
 
     /* create */
     @Override
     public void saveBook(Book book) {
-        bookRepository.save(book);
+        bookDao.save(book);
     }
 
     @Override
@@ -77,20 +77,20 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Integer deleteBook(Integer id){
-        return bookRepository.updateIsdelete(id);
+        return bookDao.updateIsdelete(id);
     }
 
     /* update */
     @Override
     @Transactional
     public Integer updateStorage(Integer storage,Integer bid){
-        return bookRepository.updateStorage(storage,bid);
+        return bookDao.updateStorage(storage,bid);
     }
 
     @Override
     @Transactional
     public Integer updateSales(Integer sales,Integer bid){
-        return bookRepository.updateSales(sales,bid);
+        return bookDao.updateSales(sales,bid);
     }
 
 
