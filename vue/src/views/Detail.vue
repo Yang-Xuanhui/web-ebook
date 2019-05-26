@@ -66,23 +66,23 @@
 </template>
 
 <script>
-    import {addCart} from "../api/cartApi";
+import {addCart} from '../api/cartApi'
 
-    export default {
-        data(){
-            return{
-                book: this.$route.params.Book,
-            }
-        },
-        props:['Book'],
-        computed:{
-        },
-        methods:{
-            addToCart:function(bid,amount){
-                addCart(bid,amount,this);
-            },
-        },
+export default {
+  data () {
+    return {
+      book: this.$route.params.Book
     }
+  },
+  props: ['Book'],
+  computed: {
+  },
+  methods: {
+    addToCart: function (bid, amount) {
+      addCart(bid, amount, this)
+    }
+  }
+}
 </script>
 <style scoped>
     .goback{

@@ -76,74 +76,69 @@
 </template>
 
 <script>
-    /* 从后端get书籍详情 */
-    import {loadData} from '../api/loadData.js';
-    import {getCookie} from "../utils/cookieUtil";
-    import {bookInOrder} from "../api/bookApi";
-    import {addCart} from "../api/cartApi";
-    import AdminBook from "../components/AdminBook";
+/* 从后端get书籍详情 */
+import {loadData} from '../api/loadData.js'
+import {getCookie} from '../utils/cookieUtil'
+import {bookInOrder} from '../api/bookApi'
+import {addCart} from '../api/cartApi'
+import AdminBook from '../components/AdminBook'
 
-    export default {
-        name: "Table",
-        components:{
-            AdminBook
-        },
-        data(){
-            return{
-                search:'',
-                Sort:{
-                    sort_type:'',
-                    order:''
-                },
-                checked:false,
-            }
-        },
-        props:{
-            /* 图书内容从父组件获得*/
-            books:{
-                type:Array,
-                required:true,
-            }
-        },
-        methods:{
-            getDetail:function(name){
-                loadData(name,this);
-            },
-            addToCart:function(bid,amount){
-                addCart(bid,amount,this);
-            },
-            /* 升降序切换*/
-            setOrder :function(type) {
-                let order = this.Sort.order;
-                if(order==='asc'){
-
-                    this.$set(this.Sort,'order','desc')
-                }
-                else{
-
-                    this.$set(this.Sort,'order','asc')
-                }
-                this.$set(this.Sort,'sort_type',type);
-
-            },
-        },
-        computed: {
-            /* 图书排序并筛选*/
-            orderedBooks: function () {
-                return bookInOrder(this.books,this.Sort,this.search)
-            },
-            isAdmin:function () {
-                let username = getCookie("username");
-                if(username==="admin"){
-                    return true
-                }
-                else{
-                    return false
-                }
-            }
-        }
-
+export default {
+  name: 'Table',
+  components: {
+    AdminBook
+  },
+  data () {
+    return {
+      search: '',
+      Sort: {
+        sort_type: '',
+        order: ''
+      },
+      checked: false
     }
+  },
+  props: {
+    /* 图书内容从父组件获得 */
+    books: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    getDetail: function (name) {
+      loadData(name, this)
+    },
+    addToCart: function (bid, amount) {
+      addCart(bid, amount, this)
+    },
+    /* 升降序切换 */
+    setOrder: function (type) {
+      let order = this.Sort.order
+      if (order === 'asc') {
+        this.$set(this.Sort, 'order', 'desc')
+      } else {
+        this.$set(this.Sort, 'order', 'asc')
+      }
+      this.$set(this.Sort, 'sort_type', type)
+    }
+  },
+  computed: {
+    /* 图书排序并筛选 */
+    orderedBooks: function () {
+      return bookInOrder(this.books, this.Sort, this.search)
+    },
+    isAdmin: function () {
+      let username = getCookie('username')
+      if (username === 'admin') {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+
+}
 
 </script>
 

@@ -6,14 +6,14 @@
 </template>
 
 <script>
-    export default {
-        name: "GoLogin",
-        methods:{
-            goLogin:function () {
-                this.$router.replace('/login')
-            }
-        }
+export default {
+  name: 'GoLogin',
+  methods: {
+    goLogin: function () {
+      this.$router.replace('/login')
     }
+  }
+}
 </script>
 
 <style scoped>

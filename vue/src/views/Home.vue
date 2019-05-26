@@ -12,31 +12,31 @@
 </template>
 
 <script>
-    export default {
-        name:"home",
-        data(){
-            return{
-                imgs:[
-                    {
-                        Name:"white",
-                        src: require('../static/img/whiteNights.jpg')
-                    },
-                    {
-                        Name:"renjianshige",
-                        src: require('../static/img/renjianshige.jpg')
-                    },
-                    {
-                        Name:"walden",
-                        src: require('../static/img/walden.jpg')
-                    },
-                    {
-                        name:"wukong",
-                        src: require('../static/img/wukong.jpg')
-                    }
-                ],
-            }
+export default {
+  name: 'home',
+  data () {
+    return {
+      imgs: [
+        {
+          Name: 'white',
+          src: require('../static/img/whiteNights.jpg')
+        },
+        {
+          Name: 'renjianshige',
+          src: require('../static/img/renjianshige.jpg')
+        },
+        {
+          Name: 'walden',
+          src: require('../static/img/walden.jpg')
+        },
+        {
+          name: 'wukong',
+          src: require('../static/img/wukong.jpg')
         }
+      ]
     }
+  }
+}
 </script>
 <style>
     .carousel{

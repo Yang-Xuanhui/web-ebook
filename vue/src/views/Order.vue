@@ -75,97 +75,95 @@
 </template>
 
 <script>
-    import {getCookie} from '../utils/cookieUtil.js'
+import {getCookie} from '../utils/cookieUtil.js'
 
-    import GoLogin from '../components/GoLogin'
+import GoLogin from '../components/GoLogin'
 
-    export default {
-        name: "Order",
-        components: {GoLogin},
-        data(){
-            return{
-                date:'',
-                search:'',
-                list:{
-                    orders:[],
-                    empty:true,
-                },
+export default {
+  name: 'Order',
+  components: {GoLogin},
+  data () {
+    return {
+      date: '',
+      search: '',
+      list: {
+        orders: [],
+        empty: true
+      }
 
-            }
-        },
-        methods:{
-            getWithDate:function(){
-                let json={"start":"","end":""};
-                if(this.date!=='' && this.date!==null){
-                    json.start = this.date[0];
-                    json.end = this.date[1];
-                }
-                this.$axios.post("http://localhost:8011/orders/readOrder",json)
-                    .then(res=>{
-                        this.$set(this.list,"orders",res.data);
-                        console.log(this.list.orders);
-                    })
-                    .catch((err)=>{
-                        console.log(err)
-                    })
-            },
-            routerTo :function (book) {
-                this.$router.push({ name: 'detail', params: { Book: book, Name:book.Name }});
-            },
-            deleteOrder(index){
-                console.log(index);
-                let json={"oid":index,"start":"","end":""};
-                if(this.date!==null){
-                    json.start = this.date[0];
-                    json.end = this.date[1];
-                }
-
-                this.$axios.post("http://localhost:8011/orders/delete",json)
-                    .then(res=>{
-                        this.$set(this.list,"orders",res.data);
-                    })
-                    .catch((err)=>{
-                        console.log(err)
-                    })
-            },
-        },
-        computed: {
-            isLogin:function(){
-                return getCookie("username");
-            },
-            isEmpty:function () {
-                if(this.list.orders===null || this.list.orders.length===0){
-                    return true;
-                }
-                return false;
-            },
-            startDate:function(){
-                if(this.date === '' || this.date === null){
-                    return " ";
-                }
-                else{
-                    return this.date[0];
-                }
-            },
-            endDate:function(){
-                if(this.date === '' || this.date === null){
-                    return " ";
-                }
-                else{
-                    return this.date[1];
-                }
-            },
-            money:function () {
-                let total = 0;
-                let orders=this.list.orders;
-                let i = 0;
-                for(i;i<orders.length;i++){
-                    total = total + orders[i].info.total_money;
-                }
-                return total;
-            }
-        }
     }
+  },
+  methods: {
+    getWithDate: function () {
+      let json = {'start': '', 'end': ''}
+      if (this.date !== '' && this.date !== null) {
+        json.start = this.date[0]
+        json.end = this.date[1]
+      }
+      this.$axios.post('http://localhost:8011/orders/readOrder', json)
+        .then(res => {
+          this.$set(this.list, 'orders', res.data)
+          console.log(this.list.orders)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    routerTo: function (book) {
+      this.$router.push({name: 'detail', params: { Book: book, Name: book.Name }})
+    },
+    deleteOrder (index) {
+      console.log(index)
+      let json = {'oid': index, 'start': '', 'end': ''}
+      if (this.date !== null) {
+        json.start = this.date[0]
+        json.end = this.date[1]
+      }
+
+      this.$axios.post('http://localhost:8011/orders/delete', json)
+        .then(res => {
+          this.$set(this.list, 'orders', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  },
+  computed: {
+    isLogin: function () {
+      return getCookie('username')
+    },
+    isEmpty: function () {
+      if (this.list.orders === null || this.list.orders.length === 0) {
+        return true
+      }
+      return false
+    },
+    startDate: function () {
+      if (this.date === '' || this.date === null) {
+        return ' '
+      } else {
+        return this.date[0]
+      }
+    },
+    endDate: function () {
+      if (this.date === '' || this.date === null) {
+        return ' '
+      } else {
+        return this.date[1]
+      }
+    },
+    money: function () {
+      let total = 0
+      let orders = this.list.orders
+      let i = 0
+      for (i; i < orders.length; i++) {
+        total = total + orders[i].info.total_money
+      }
+      return total
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -117,78 +117,77 @@
 </template>
 
 <script>
-    import {loadData} from "../api/loadData";
+import {loadData} from '../api/loadData'
 
-    export default {
-        name: "adminBook.vue",
-        props:{
-            /* 图书内容从父组件获得*/
-            books:{
-                type:Array,
-                required:true,
-            },
-            orderedBooks:{
-                type:Array,
-                required:true,
-            }
-        },
-        methods:{
-            getDetail:function(name){
-                loadData(name,this);
-            },
-            /*删除行，从当前排序下的数组中删除内容，没有根本删除*/
-            DeleteBook:function(name){
-                console.log(name);
-                let book = {};
-                book.name = name;
-                this.$axios.post("http://localhost:8011/books/delete",book)
-                    .then(res=>{
-                        if(res.data===true){
-                            console.log("delete success");
-                            this.orderedBooks.splice(name,1);
-                        }
-                        else{
-                            console.log("delete fail");
-                        }
-                    })
-            },
-            /* 根据该列的label设置对应的flag */
-            dblhandleCurrentChange :function (row, column) {
-                switch (column.label) {
-                    case "书名":
-                        row.nameflag = true;
-                        break;
-                    case "作者":
-                        row.writerflag = true;
-                        break;
-                    case "ISBN":
-                        row.isbnflag = true;
-                        break;
-                    case "价格":
-                        row.priceflag = true;
-                        break;
-                    case "库存":
-                        row.storageflag = true;
-                        break;
-                    case "销量":
-                        row.salesflag = true;
-                        break;
-                }
-            },
-            /* 修改完内容后失去对焦，修改flag，内容从input形式变为显示修改后内容*/
-            inputblur() {
-                let tableD = this.books;
-                tableD.forEach(function (item) {
-                    item.nameflag = false;
-                    item.writerflag = false;
-                    item.isbnflag = false;
-                    item.priceflag = false;
-                    item.storageflag = false;
-                    item.salesflag = false;
-                });
-            },
-        },
+export default {
+  name: 'adminBook.vue',
+  props: {
+    /* 图书内容从父组件获得 */
+    books: {
+      type: Array,
+      required: true
+    },
+    orderedBooks: {
+      type: Array,
+      required: true
     }
+  },
+  methods: {
+    getDetail: function (name) {
+      loadData(name, this)
+    },
+    /* 删除行，从当前排序下的数组中删除内容，没有根本删除 */
+    DeleteBook: function (name) {
+      console.log(name)
+      let book = {}
+      book.name = name
+      this.$axios.post('http://localhost:8011/books/delete', book)
+        .then(res => {
+          if (res.data === true) {
+            console.log('delete success')
+            this.orderedBooks.splice(name, 1)
+          } else {
+            console.log('delete fail')
+          }
+        })
+    },
+    /* 根据该列的label设置对应的flag */
+    dblhandleCurrentChange: function (row, column) {
+      switch (column.label) {
+        case '书名':
+          row.nameflag = true
+          break
+        case '作者':
+          row.writerflag = true
+          break
+        case 'ISBN':
+          row.isbnflag = true
+          break
+        case '价格':
+          row.priceflag = true
+          break
+        case '库存':
+          row.storageflag = true
+          break
+        case '销量':
+          row.salesflag = true
+          break
+      }
+    },
+    /* 修改完内容后失去对焦，修改flag，内容从input形式变为显示修改后内容 */
+    inputblur () {
+      let tableD = this.books
+      tableD.forEach(function (item) {
+        item.nameflag = false
+        item.writerflag = false
+        item.isbnflag = false
+        item.priceflag = false
+        item.storageflag = false
+        item.salesflag = false
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>
