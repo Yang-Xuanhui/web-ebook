@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import {loadData} from '../api/loadData'
+import {loadBook} from '../api/loadData'
 
 export default {
   name: 'adminBook.vue',
@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     getDetail: function (name) {
-      loadData(name, this)
+      loadBook(name, this)
     },
     /* 删除行，从当前排序下的数组中删除内容，没有根本删除 */
     DeleteBook: function (name) {

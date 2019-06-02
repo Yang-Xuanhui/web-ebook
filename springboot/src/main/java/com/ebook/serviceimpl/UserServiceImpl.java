@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.List;
+
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -31,6 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUser(Integer id){
         return userDao.findByUid(id);
+    }
+
+    @Override
+    public List<User> findAll(){
+        return userDao.findAll();
     }
 
     @Override

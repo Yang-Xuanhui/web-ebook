@@ -1,14 +1,12 @@
-import axios from 'axios'
-axios.defaults.withCredentials = true
-function buyOne (cid, amount, cart) {
+function buyOne (cid, amount, that) {
   let oneOrder = new Array(1)
   oneOrder[0] = {'cart_id': cid, 'amount': amount}
   let json = {'cartlist': oneOrder}
   console.log(json)
-  axios.post('http://localhost:8011/carts/buy', json)
+  that.$axios.post('http://localhost:8011/carts/buy', json)
     .then(res => {
-      cart.$set(cart.list, 'carts', res.data)
-      cart.$notify({
+      that.$set(that.list, 'carts', res.data)
+      that.$notify({
         title: '成功',
         message: '购买成功',
         type: 'success'
@@ -19,9 +17,9 @@ function buyOne (cid, amount, cart) {
     })
 }
 
-function buySome (orders, cart) {
+function buySome (orders, that) {
   if (orders.length === 0) {
-    cart.$notify.error({
+    that.$notify.error({
       title: '错误',
       message: '没有选中书籍'
     })
@@ -33,10 +31,10 @@ function buySome (orders, cart) {
     list[i] = order
   }
   let json = {'cartlist': list}
-  axios.post('http://localhost:8011/carts/buy', json)
+  that.$axios.post('http://localhost:8011/carts/buy', json)
     .then(res => {
-      cart.$set(cart.list, 'carts', res.data)
-      cart.$notify({
+      that.$set(that.list, 'carts', res.data)
+      that.$notify({
         title: '成功',
         message: '购买成功',
         type: 'success'
@@ -47,14 +45,14 @@ function buySome (orders, cart) {
     })
 }
 
-function deleteOne (id, cart) {
+function deleteOne (id, that) {
   let oneItem = new Array(1)
   oneItem[0] = id
   let json = {'cartlist': oneItem}
-  axios.post('http://localhost:8011/carts/delete', json)
+  that.$axios.post('http://localhost:8011/carts/delete', json)
     .then(res => {
-      cart.$set(cart.list, 'carts', res.data)
-      cart.$notify({
+      that.$set(that.list, 'carts', res.data)
+      that.$notify({
         title: '成功',
         message: '成功删除',
         type: 'success'
@@ -65,9 +63,9 @@ function deleteOne (id, cart) {
     })
 }
 
-function deleteSome (items, cart) {
+function deleteSome (items, that) {
   if (items.length === 0) {
-    cart.$notify.error({
+    that.$notify.error({
       title: '错误',
       message: '没有选中书籍'
     })
@@ -78,10 +76,10 @@ function deleteSome (items, cart) {
     list[i] = items[i].cid
   }
   let json = {'cartlist': list}
-  axios.post('http://localhost:8011/carts/delete', json)
+  that.$axios.post('http://localhost:8011/carts/delete', json)
     .then(res => {
-      cart.$set(cart.list, 'carts', res.data)
-      cart.$notify({
+      that.$set(that.list, 'carts', res.data)
+      that.$notify({
         title: '成功',
         message: '购买删除',
         type: 'success'
@@ -91,9 +89,9 @@ function deleteSome (items, cart) {
       console.log(err)
     })
 }
-function updateAmount (cid, amount) {
+function updateAmount (cid, amount, that) {
   let json = {'cart_id': cid, 'amount': amount}
-  axios.post('http://localhost:8011/carts/update', json)
+  that.$axios.post('http://localhost:8011/carts/update', json)
     .then(res => {
       console.log(res.data)
     })
@@ -102,32 +100,32 @@ function updateAmount (cid, amount) {
     })
 }
 
-function listCart (cart) {
-  axios.post('http://localhost:8011/carts/list')
+function listCart (that) {
+  that.$axios.post('http://localhost:8011/carts/list')
     .then(res => {
-      cart.$set(cart.list, 'carts', res.data)
+      that.$set(that.list, 'carts', res.data)
     })
     .catch((err) => {
       console.log(err)
     })
 }
 
-function addCart (bid, amount, cart) {
+function addCart (bid, amount, that) {
   if (amount > 0) {
     let json = {'book_id': bid, 'amount': amount}
     let msg = ''
-    axios.post('http://localhost:8011/carts/add', json)
+    that.$axios.post('http://localhost:8011/carts/add', json)
       .then(
         res => {
           msg = res.data
-          if (msg === 'add to cart') {
-            cart.$notify({
+          if (msg === '加入购物车') {
+            that.$notify({
               title: '成功',
-              message: '加入购物车',
+              message: msg,
               type: 'success'
             })
           } else {
-            cart.$notify.error({
+            that.$notify.error({
               title: '错误',
               message: msg
             })
@@ -138,7 +136,7 @@ function addCart (bid, amount, cart) {
         console.log(err)
       })
   } else {
-    cart.$notify({
+    that.$notify({
       title: '警告',
       message: '数量不能为0',
       type: 'warning'

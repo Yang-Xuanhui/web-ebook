@@ -21,11 +21,9 @@
             <el-menu-item index="/order">
               订单
             </el-menu-item>
-            <!-- 未实现
-          <el-menu-item index="/statistics">
-            统计
-          </el-menu-item>
-          -->
+            <el-menu-item index="/admin" v-show="isAdmin">
+              管理
+            </el-menu-item>
             <el-menu-item index="/login" id="login" v-show="!isLogin">
               <el-col :span="3" >
                 <el-button index="/login" v-on:click="Login" type="text" >
@@ -69,13 +67,11 @@ export default {
     handleCommand (command) {
       if (command === 'login') {
         clearCookie()
-        // 强制刷新页面
-        this.$router.go(0)
         this.$router.replace('/login')
       } else if (command === 'logout') {
         alert('Goodbye ' + getCookie('username'))
         clearCookie()
-        this.$router.go(0)
+        window.location.reload()
         this.$router.replace('/')
       }
     }
@@ -91,6 +87,14 @@ export default {
         return false
       } else {
         return user
+      }
+    },
+    isAdmin: function () {
+      let role = getCookie('role')
+      if (role === 'admin') {
+        return true
+      } else {
+        return false
       }
     }
   }

@@ -25,6 +25,7 @@ function getCookie (cname) {
 // 清除cookie
 function clearCookie () {
   setCookie('username', '', -1)
+  setCookie('role', '', -1)
 }
 function checkCookie () {
   var user = getCookie('username')

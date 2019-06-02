@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import {loadData} from '../api/loadData'
+import {loadBook} from '../api/loadData'
 import {listCart, buyOne, buySome, deleteOne, deleteSome, updateAmount} from '../api/cartApi'
 
 import {getCookie} from '../utils/cookieUtil'
@@ -107,10 +107,10 @@ export default {
   },
   methods: {
     getDetail: function (name) {
-      loadData(name, this)
+      loadBook(name, this)
     },
     UpdateAmount: function (row) {
-      updateAmount(row.cid, row.amount)
+      updateAmount(row.cid, row.amount, this)
     },
     /* delete row from the table, but not delete from the origin data */
     DeleteOne: function (id) {

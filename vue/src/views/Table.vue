@@ -77,9 +77,9 @@
 
 <script>
 /* 从后端get书籍详情 */
-import {loadData} from '../api/loadData.js'
+import {loadBook} from '../api/loadData.js'
 import {getCookie} from '../utils/cookieUtil'
-import {bookInOrder} from '../api/bookApi'
+import {bookInOrder} from '../utils/bookOrder'
 import {addCart} from '../api/cartApi'
 import AdminBook from '../components/AdminBook'
 
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     getDetail: function (name) {
-      loadData(name, this)
+      loadBook(name, this)
     },
     addToCart: function (bid, amount) {
       addCart(bid, amount, this)

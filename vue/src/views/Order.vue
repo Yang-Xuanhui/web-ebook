@@ -19,8 +19,12 @@
                 <p>没有可查看的订单</p>
             </div>
             <div v-show="!isEmpty">
-                <div v-show="date" class="orderInfo">累计消费
-                    <span>{{this.money}}</span> 元</div>
+                <el-row type="flex" justify="end"
+                        v-show="date" class="orderInfo">
+                  <el-col :span="8">累计消费
+                    <span>{{this.money}}</span> 元
+                  </el-col>
+                </el-row>
                 <el-card class="order-card"
                          v-for="(order) in list.orders"
                          v-bind:key="order.info.oid">
@@ -76,7 +80,7 @@
 
 <script>
 import {getCookie} from '../utils/cookieUtil.js'
-
+import {getWithDate, deleteOrder} from '../api/orderApi'
 import GoLogin from '../components/GoLogin'
 
 export default {
@@ -95,38 +99,13 @@ export default {
   },
   methods: {
     getWithDate: function () {
-      let json = {'start': '', 'end': ''}
-      if (this.date !== '' && this.date !== null) {
-        json.start = this.date[0]
-        json.end = this.date[1]
-      }
-      this.$axios.post('http://localhost:8011/orders/readOrder', json)
-        .then(res => {
-          this.$set(this.list, 'orders', res.data)
-          console.log(this.list.orders)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      getWithDate(this)
     },
     routerTo: function (book) {
       this.$router.push({name: 'detail', params: { Book: book, Name: book.Name }})
     },
     deleteOrder (index) {
-      console.log(index)
-      let json = {'oid': index, 'start': '', 'end': ''}
-      if (this.date !== null) {
-        json.start = this.date[0]
-        json.end = this.date[1]
-      }
-
-      this.$axios.post('http://localhost:8011/orders/delete', json)
-        .then(res => {
-          this.$set(this.list, 'orders', res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      deleteOrder(index, this)
     }
   },
   computed: {
@@ -160,7 +139,7 @@ export default {
       for (i; i < orders.length; i++) {
         total = total + orders[i].info.total_money
       }
-      return total
+      return total.toFixed(2)
     }
   }
 }
@@ -177,9 +156,10 @@ export default {
         margin-top: 10px;
     }
     .orderInfo span{
+        margin: 10px 20px;
+        alignment: right;
         color: #23a393;
         font-weight: bolder;
-        font-size:20px;
     }
     .checkOrder{
         margin-left: 10px;
