@@ -7,7 +7,7 @@
         <div>
             <el-row>
                 <el-col :span="6">
-                    <img class="cover" :src="require('../static/img/'+book.img)"/>
+                    <img class="cover" :src="book.img"/>
                 </el-col>
                 <el-col :span="14" class="book-infor">
                     <ul>

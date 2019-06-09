@@ -1,111 +1,63 @@
 <template>
         <!--用table方式呈现-->
         <div>
+            <el-button class="addBook" round icon="el-icon-circle-plus-outline"
+                       v-on:click="addBook()">增加书籍</el-button>
             <el-table :data="orderedBooks"
                       class="tb-edit"
                       stripe
                       style="width: 100%"
-                      @cell-dblclick="dblhandleCurrentChange"
                       highlight-current-row>
                 <el-table-column
                         type="index"
                 >
                 </el-table-column>
                 <el-table-column
-                        prop="name"
+                        prop="cname"
                         label="书名"
                         sortable
                 >
-                    <template slot-scope="scope">
-                        <el-input v-if="scope.row.nameflag"
-                                  size="small" v-model="scope.row.cname"
-                                  placeholder="please input"
-                                  v-on:blur="inputblur"
-                                  v-focus></el-input>
-                        <span v-if="!scope.row.nameflag">{{scope.row.cname}}</span>
-                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="writer"
                         label="作者"
                         sortable
-                >
-                    <template slot-scope="scope">
-                        <el-input v-if="scope.row.writerflag"
-                                  size="small" v-model="scope.row.writer"
-                                  placeholder="please input"
-                                  v-on:blur="inputblur"
-                                  v-focus></el-input>
-                        <span v-if="!scope.row.writerflag">{{scope.row.writer}}</span>
-                    </template>
-                </el-table-column>
+                ></el-table-column>
                 <el-table-column
-                        prop="ISBN"
+                        prop="isbn"
                         label="ISBN"
                         sortable
                 >
-                    <template slot-scope="scope">
-                        <el-input v-if="scope.row.isbnflag"
-                                  size="small" v-model="scope.row.isbn"
-                                  placeholder="please input"
-                                  v-on:blur="inputblur"
-                                  v-focus></el-input>
-                        <span v-if="!scope.row.isbnflag">{{scope.row.isbn}}</span>
-                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="price"
                         label="价格"
                         sortable
                 >
-                    <template slot-scope="scope">
-                        <el-input v-if="scope.row.priceflag"
-                                  size="small" v-model="scope.row.price"
-                                  placeholder="please input"
-                                  v-on:blur="inputblur"
-                                  v-focus></el-input>
-                        <span v-if="!scope.row.priceflag">{{scope.row.price}}</span>
-                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="storage"
                         label="库存"
                         sortable
                 >
-                    <template slot-scope="scope">
-                        <el-input v-if="scope.row.storageflag"
-                                  size="small" v-model="scope.row.storage"
-                                  placeholder="please input"
-                                  v-on:blur="inputblur"
-                                  v-focus></el-input>
-                        <span v-if="!scope.row.storageflag">{{scope.row.storage}}</span>
-                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="sales"
                         label="销量"
                         sortable
-                ><template slot-scope="scope">
-                    <el-input v-if="scope.row.salesflag"
-                              size="small" v-model="scope.row.sales"
-                              placeholder="please input"
-                              v-on:blur="inputblur"
-                              v-focus></el-input>
-                    <span v-if="!scope.row.salesflag">{{scope.row.sales}}</span>
-                </template></el-table-column>
+                ></el-table-column>
                 <el-table-column
                         label="详情">
                     <template slot-scope="scope">
                         <el-button size="small" type="text" v-on:click="getDetail(scope.row.name)" >查看详情</el-button>
                     </template>
                 </el-table-column>
-                <!--<el-table-column
+                <el-table-column
                         label="修改">
                     <template slot-scope="scope">
-                        <el-button size="small" type="text" v-on:click="Update(scope.row.name)" >修改</el-button>
+                        <el-button size="small" type="text" v-on:click="updateBook(scope.row)" >修改</el-button>
                     </template>
                 </el-table-column>
-                -->
                 <el-table-column
                         label="删除">
                     <template slot-scope="scope">
@@ -118,9 +70,11 @@
 
 <script>
 import {loadBook} from '../api/loadData'
+import UploadBook from '../components/UploadBook'
 
 export default {
   name: 'adminBook.vue',
+  components: {UploadBook},
   props: {
     /* 图书内容从父组件获得 */
     books: {
@@ -132,9 +86,34 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      empForm: {
+        cname: '',
+        name: '',
+        writer: '',
+        brief: '',
+        img: '',
+        isbn: '',
+        price: 0,
+        rate: 0,
+        storage: 0,
+        sales: 0,
+        book_intro: '',
+        writer_intro: '',
+        book_comment: ''
+      }
+    }
+  },
   methods: {
     getDetail: function (name) {
       loadBook(name, this)
+    },
+    addBook: function () {
+      this.$router.push({name: 'uploadBook', params: {Book: this.empForm}})
+    },
+    updateBook: function (oldBook) {
+      this.$router.push({name: 'uploadBook', params: {Book: oldBook}})
     },
     /* 删除行，从当前排序下的数组中删除内容，没有根本删除 */
     DeleteBook: function (name) {
@@ -143,53 +122,21 @@ export default {
       book.name = name
       this.$axios.post('http://localhost:8011/books/delete', book)
         .then(res => {
-          if (res.data === true) {
+          if (res.data === '删除成功') {
             console.log('delete success')
             this.orderedBooks.splice(name, 1)
           } else {
             console.log('delete fail')
           }
         })
-    },
-    /* 根据该列的label设置对应的flag */
-    dblhandleCurrentChange: function (row, column) {
-      switch (column.label) {
-        case '书名':
-          row.nameflag = true
-          break
-        case '作者':
-          row.writerflag = true
-          break
-        case 'ISBN':
-          row.isbnflag = true
-          break
-        case '价格':
-          row.priceflag = true
-          break
-        case '库存':
-          row.storageflag = true
-          break
-        case '销量':
-          row.salesflag = true
-          break
-      }
-    },
-    /* 修改完内容后失去对焦，修改flag，内容从input形式变为显示修改后内容 */
-    inputblur () {
-      let tableD = this.books
-      tableD.forEach(function (item) {
-        item.nameflag = false
-        item.writerflag = false
-        item.isbnflag = false
-        item.priceflag = false
-        item.storageflag = false
-        item.salesflag = false
-      })
     }
   }
 }
 </script>
 
 <style scoped>
-
+  .addBook {
+    margin: 20px 80px;
+    float: right;
+  }
 </style>

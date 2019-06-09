@@ -50,7 +50,7 @@
                                     label="封面"
                                     width="180">
                                 <template slot-scope="scope">
-                                    <img :src="require('../static/img/'+scope.row.img)" class="cover"/>
+                                    <img :src="scope.row.img" class="cover"/>
                                 </template>
                             </el-table-column>
                             <el-table-column

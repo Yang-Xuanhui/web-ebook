@@ -2,6 +2,7 @@ package com.ebook.serviceimpl;
 
 import com.ebook.dao.BookDao;
 import com.ebook.entity.Book;
+import com.ebook.entity.BookCover;
 import com.ebook.service.BookService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class BookServiceImpl implements BookService {
         return bookDao.findByIsdeleteFalse();
     }
 
+    @Override
+    public BookCover findCover(String id){
+        return bookDao.findCoverById(id);
+    }
+
     /* create */
     @Override
     public void saveBook(Book book) {
@@ -54,7 +60,10 @@ public class BookServiceImpl implements BookService {
         String writer_intro = book.getString("writer_intro");
         String book_comment = book.getString("book_comment");
 
-        newbook.setBid(0);
+        newbook = findBook(name);
+        if(newbook == null){
+            newbook.setBid(0);
+        }
         newbook.setName(name);
         newbook.setCname(cname);
         newbook.setWriter(writer);
@@ -71,6 +80,11 @@ public class BookServiceImpl implements BookService {
         newbook.setIsDelete(false);
 
         saveBook(newbook);
+    }
+
+    @Override
+    public BookCover saveBookCover(BookCover bookCover){
+        return bookDao.saveCover(bookCover);
     }
 
     /* delete (update */

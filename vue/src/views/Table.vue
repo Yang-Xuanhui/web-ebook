@@ -48,7 +48,7 @@
                      v-for="(book) in orderedBooks"
                      v-bind:key="book.name"
                      shadow="hover">
-                <img :src="require('../static/img/'+book.img)" class="cover"/>
+                <img :src="book.img" class="cover"/>
                 <div class="book-infor">
                     <ul>
                         <li class="book-name"><span>{{book.cname}}</span></li>

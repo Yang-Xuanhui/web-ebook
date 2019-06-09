@@ -23,7 +23,7 @@
                     <template slot-scope="scope">
                         <el-row type="flex" justify="">
                             <el-col :span="4" class="cover">
-                                <img :src="require('../static/img/'+scope.row.img)" class="cover"/>
+                                <img :src="scope.row.img" class="cover"/>
                             </el-col>
                             <el-col :span="20" class="info">
                                 <ul v-show="!scope.row.isDelete">
