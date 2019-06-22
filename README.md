@@ -84,3 +84,25 @@ brief.html和detail.html有两种样式（css1.css、css2.css）
 - 新增BookCover实体类和CoverRepository
 
 增加管理员功能，管理员可以增加、修改、删除书籍信息（uploadBook.vue）
+
+### version 3.3
+
+完善管理员功能
+
+- 重构User, Order的entity类（ORM）
+  - User类增加 ```List<Order> orderList``` 和 ```List<Cart> cartList``` 属性
+  - Order类增加```List<OrderItem> items``` 属性
+- 新增管理员查看指定时间内用户累计消费和书籍销量
+- 管理员查看所有订单时可根据时间、用户名和书籍进行筛选
+
+调整美化界面
+
+### 未完成……
+
+没有对后端代码进行单元测试
+
+目前的Dao层没有太大用处
+
+部分代码写得有点乱，备注比较少，需要重构代码
+
+……
