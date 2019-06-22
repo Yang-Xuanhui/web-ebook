@@ -12,6 +12,11 @@ public class User{
     private String username;
     private String email,password;
     private Integer role, enable;
+    @OneToMany(mappedBy="user",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Order> orderList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Cart> cartList;
 
 
     public void User(){}
@@ -53,4 +58,10 @@ public class User{
         this.enable = enable;
     }
 
+    public List<Order> getOrderList(){
+        return orderList;
+    }
+    public List<Cart> getCartList(){
+        return cartList;
+    }
 }

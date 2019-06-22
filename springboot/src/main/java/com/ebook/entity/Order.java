@@ -14,12 +14,14 @@ public class Order{
     @Column(name="oid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer oid;
+
+    @ManyToOne(optional=false)
     @JoinColumn(name="uid")
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity = User.class, cascade = CascadeType.MERGE)
     private User user;
     private Timestamp date;
     private Boolean isdelete;
-
+    @OneToMany(mappedBy="order",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<OrderItem> items;
     public void Order(){}
 
 
@@ -50,4 +52,8 @@ public class Order{
         this.isdelete = isDelete;
     }
 
+
+    public List<OrderItem> getItems(){
+        return items;
+    }
 }

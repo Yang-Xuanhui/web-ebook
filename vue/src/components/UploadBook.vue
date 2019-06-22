@@ -38,7 +38,7 @@
             :http-request="handleUploadCover"
             :show-file-list="false"
             :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <img v-if="form.img" :src="form.img" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
@@ -91,7 +91,6 @@ export default {
   name: 'UploadBook',
   data () {
     return {
-      imageUrl: '',
       form: this.$route.params.Book,
       rules: {
         cname: [
@@ -129,7 +128,6 @@ export default {
       this.$axios.post('http://localhost:8011/books/upload', formData, config).then((res) => {
         console.log(res)
         this.form.img = res.data
-        this.imageUrl = res.data
       })
     },
     beforeAvatarUpload (file) {

@@ -45,7 +45,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void saveBook(JSONObject book){
         Book newbook = new Book();
-
+        Book findbook = new Book();
         String name = book.getString("name");
         String cname = book.getString("cname");
         String writer = book.getString("writer");
@@ -60,9 +60,11 @@ public class BookServiceImpl implements BookService {
         String writer_intro = book.getString("writer_intro");
         String book_comment = book.getString("book_comment");
 
-        newbook = findBook(name);
-        if(newbook == null){
+        if((findbook = findBook(name))==null){
             newbook.setBid(0);
+        }
+        else{
+            newbook = findbook;
         }
         newbook.setName(name);
         newbook.setCname(cname);

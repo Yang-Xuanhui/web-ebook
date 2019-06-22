@@ -1,9 +1,13 @@
 package com.ebook.service;
 
+import com.ebook.entity.Book;
 import com.ebook.entity.OrderItem;
 import com.ebook.entity.Order;
+import com.ebook.entity.User;
+
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService{
     /* find orders without time range */
@@ -29,4 +33,14 @@ public interface OrderService{
     List<OrderItem> findItems(Integer o_id);
 
     void save(OrderItem orderitem);
+
+    List<Map<String,Object>> getOrder(List<Order> orders);
+
+    Map<Book, Integer> findBookSales(Timestamp begin, Timestamp end);
+
+    Map<User, Double> findUserCsm(Timestamp begin, Timestamp end);
+
+    Timestamp getBegin(String start);
+
+    Timestamp getEnd(String time);
 }

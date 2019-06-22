@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -16,11 +15,6 @@ public class CartServiceImpl implements CartService {
     private CartDao cartDao;
 
     /* read */
-    @Override
-    public List<Cart> findbyUser(Integer uid) {
-        return cartDao.findByUser_Uid(uid);
-    }
-
     @Override
     public Cart findbyId(Integer cid) {
         return cartDao.findByCid(cid);
