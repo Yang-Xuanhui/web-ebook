@@ -13,6 +13,14 @@
                 >
                 </el-table-column>
                 <el-table-column
+                  prop="img"
+                  label="封面"
+                  width="180">
+                  <template slot-scope="scope">
+                    <img :src="scope.row.img" class="cover"/>
+                  </template>
+                </el-table-column>
+                <el-table-column
                         prop="cname"
                         label="书名"
                         sortable
@@ -123,7 +131,7 @@ export default {
       this.$axios.post('http://localhost:8011/books/delete', book)
         .then(res => {
           if (res.data === '删除成功') {
-            console.log('delete success')
+            // console.log('delete success')
             this.orderedBooks.splice(name, 1)
           } else {
             console.log('delete fail')
@@ -138,5 +146,8 @@ export default {
   .addBook {
     margin: 20px 80px;
     float: right;
+  }
+  .cover{
+    width: 100%;
   }
 </style>

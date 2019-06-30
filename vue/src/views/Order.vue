@@ -4,17 +4,23 @@
             <goLogin/>
         </div>
         <div class="order" v-show="isLogin">
-            <div class="block">
+            <el-row>
+              <el-col :span="12">
                 <el-date-picker
-                        v-model="date"
-                        type="daterange"
-                        range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        value-format="yyyy-MM-dd HH:mm:ss">
+                  v-model="date"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd HH:mm:ss">
                 </el-date-picker>
                 <el-button round @click="getWithDate" class="checkOrder">查看订单</el-button>
-            </div>
+              </el-col>
+              <el-col :span="8" v-show="isAdmin">
+                <el-input v-model="search" style="width: 300px"
+                          placeholder="请输入用户名" prefix-icon="el-icon-search"/>
+              </el-col>
+            </el-row>
             <div v-show="isEmpty">
                 <p>没有可查看的订单</p>
             </div>
@@ -26,10 +32,13 @@
                   </el-col>
                 </el-row>
                 <el-card class="order-card"
-                         v-for="(order) in list.orders"
+                         v-for="(order) in searchOrder"
                          v-bind:key="order.info.oid">
                     <div slot="header" class="clearfix">
                         <el-row type="flex" justify="space-between" class="orderInfo">
+                            <el-col v-show="isAdmin">
+                              用户名：<span>{{order.info.user}}</span>
+                            </el-col>
                             <el-col>
                                 订单号：<span>{{order.info.oid}}</span>
                             </el-col>
@@ -112,6 +121,14 @@ export default {
     isLogin: function () {
       return getCookie('username')
     },
+    isAdmin: function () {
+      let role = getCookie('role')
+      if (role === 'admin') {
+        return true
+      } else {
+        return false
+      }
+    },
     isEmpty: function () {
       if (this.list.orders === null || this.list.orders.length === 0) {
         return true
@@ -140,6 +157,14 @@ export default {
         total = total + orders[i].info.total_money
       }
       return total.toFixed(2)
+    },
+    searchOrder: function () {
+      if (this.isAdmin) {
+        return this.list.orders.filter(data => !this.search ||
+          data.info.user.includes(this.search))
+      } else {
+        return this.list.orders
+      }
     }
   }
 }

@@ -56,6 +56,11 @@ export default new Router({
       path: '/upload',
       name: 'uploadBook',
       component: () => import('../components/UploadBook.vue')
+    },
+    {
+      path: '/statistic',
+      name: 'statistic',
+      component: () => import('../views/Statistic.vue')
     }
   ]
 })

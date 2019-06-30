@@ -2,7 +2,7 @@ function buyOne (cid, amount, that) {
   let oneOrder = new Array(1)
   oneOrder[0] = {'cart_id': cid, 'amount': amount}
   let json = {'cartlist': oneOrder}
-  console.log(json)
+  // console.log(json)
   that.$axios.post('http://localhost:8011/carts/buy', json)
     .then(res => {
       that.$set(that.list, 'carts', res.data)

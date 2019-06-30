@@ -117,7 +117,7 @@ export default {
   props: ['Book'],
   methods: {
     handleUploadCover (a) {
-      console.log(a.file)
+      // console.log(a.file)
       let formData = new FormData()
       formData.append('image', a.file)
       let config = {
@@ -135,10 +135,10 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
+        this.$message.error('上传图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        this.$message.error('上传图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
     },
@@ -146,7 +146,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$axios.post('http://localhost:8011/books/add', this.form).then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             if (res.data === '没有增加图书的权限') {
               this.$message.error('没有增加图书的权限')
             } else if (res.data === '更新书籍') {

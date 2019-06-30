@@ -21,6 +21,9 @@
             <el-menu-item index="/order">
               订单
             </el-menu-item>
+            <el-menu-item index="/statistic" v-show="isAdmin">
+              统计
+            </el-menu-item>
             <el-menu-item index="/admin" v-show="isAdmin">
               管理
             </el-menu-item>

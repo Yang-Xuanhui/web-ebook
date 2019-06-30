@@ -7,13 +7,13 @@ function login (that) {
       if (res.data === 1) { // user
         setCookie('username', that.user.username, 1)
         setCookie('role', 'user')
-        that.$router.go(0)
         that.$router.push({ path: '/' }) // 登录成功之后重定向到首页
+        that.$router.go(0)
       } else if (res.data === 2) { // admin
         setCookie('username', that.user.username, 1)
         setCookie('role', 'admin')
-        that.$router.go(0)
         that.$router.push({ path: '/' }) // 登录成功之后重定向到首页
+        that.$router.go(0)
       } else if (res.data === -1) {
         that.$notify.error({
           title: '登录失败',

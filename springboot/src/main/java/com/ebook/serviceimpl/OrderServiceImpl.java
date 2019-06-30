@@ -6,6 +6,7 @@ import com.ebook.entity.Book;
 import com.ebook.entity.Order;
 import com.ebook.entity.OrderItem;
 import com.ebook.entity.User;
+import com.ebook.service.BookService;
 import com.ebook.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
     @Autowired
     private OrderItemDao orderItemDao;
+    @Autowired
+    private BookService bookService;
 
     /* find orders without time range */
     @Override
@@ -144,7 +147,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Map<Book, Integer> findBookSales(Timestamp begin, Timestamp end){
         List<Order> orders = findAll();
+        List<Book> books = bookService.listBook();
         Map<Book, Integer> sales = new HashMap<>();
+        // 销量为0的书也会被统计
+        for(Book book : books){
+            sales.put(book,0);
+        }
         for(Order order : orders){
             Timestamp date = order.getDate();
             // the order is in the time span we search
