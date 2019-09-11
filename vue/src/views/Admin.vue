@@ -31,7 +31,13 @@
           <el-table-column
             label="操作">
             <template slot-scope="scope">
-              <el-button v-on:click="ban(scope.row)" size="small" round>
+              <el-button v-on:click="ban(scope.row)" size="small" round
+                         v-if="forbid(scope.row.username)" disabled>
+                <span v-show="scope.row.enable==1">禁用</span>
+                <span v-show="scope.row.enable==0">解禁</span>
+              </el-button>
+              <el-button v-on:click="ban(scope.row)" size="small" round
+                         v-else>
                 <span v-show="scope.row.enable==1">禁用</span>
                 <span v-show="scope.row.enable==0">解禁</span>
               </el-button>
@@ -59,6 +65,9 @@ export default {
   methods: {
     ban: function (user) {
       banUser(user, this)
+    },
+    forbid: function (name) {
+      return name === 'admin'
     }
   },
   created: function () {
