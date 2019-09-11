@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.ebook.entity.User;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -14,6 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
 
     User findByUid(Integer uid);
+
+    List<User> findAll();
 
     @Modifying
     @Query(value = "update users set enable=?1 where username= ?2", nativeQuery = true)

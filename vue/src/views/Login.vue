@@ -16,49 +16,24 @@
 </template>
 
 <script>
-    import {setCookie} from '../utils/cookieUtil.js'
-    export default {
-        methods: {
+import {login} from '../api/login'
+export default {
+  methods: {
 
-            login:function() {
-                this.$axios.post("http://localhost:8011/users/login",this.user)
-                    .then(res=>{
-
-                    console.log(this.user);
-                    /* admin */
-                    if(res.data===2 || res.data===1){
-                        setCookie("username",this.user.username,1);
-                        this.$router.go(0)
-                        this.$router.push({ path: '/' }); //登录成功之后重定向到首页
-                    }
-                    else if(res.data===-1){
-                        this.$notify.error({
-                            title: '登录失败',
-                            message: "用户被禁用",
-                        });
-                    }
-                    else if(res.data===0){
-                        this.$notify.error({
-                            title: '登录失败',
-                            message: "用户名或密码错误",
-                        });
-                    }
-                })
-                    .catch((err)=>{
-                        console.log(err)
-                    });
-            },
-            register:function () {
-                this.$router.push({ name: 'register'});
-            }
-        },
-        data () {
-            return {
-                isLogin:false,
-                user: {}
-            }
-        }
+    login: function () {
+      login(this)
+    },
+    register: function () {
+      this.$router.push({name: 'register'})
     }
+  },
+  data () {
+    return {
+      isLogin: false,
+      user: {}
+    }
+  }
+}
 </script>
 <style>
     .login{

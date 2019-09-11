@@ -23,7 +23,7 @@
                     <template slot-scope="scope">
                         <el-row type="flex" justify="">
                             <el-col :span="4" class="cover">
-                                <img :src="require('../static/img/'+scope.row.img)" class="cover"/>
+                                <img :src="scope.row.img" class="cover"/>
                             </el-col>
                             <el-col :span="20" class="info">
                                 <ul v-show="!scope.row.isDelete">
@@ -83,66 +83,62 @@
 </template>
 
 <script>
-    import {loadData} from "../api/loadData";
-    import {listCart} from "../api/cartApi";
-    import {buyOne} from "../api/cartApi";
-    import {buySome} from "../api/cartApi";
-    import {deleteOne} from "../api/cartApi";
-    import {deleteSome} from "../api/cartApi";
-    import {updateAmount} from "../api/cartApi";
-    import {getCookie} from "../utils/cookieUtil";
+import {loadBook} from '../api/loadData'
+import {listCart, buyOne, buySome, deleteOne, deleteSome, updateAmount} from '../api/cartApi'
 
-    import GoLogin from "../components/GoLogin"
-    export default {
-        name: "Cart",
-        components:{GoLogin},
-        data(){
-            return{
-                list:{
-                    carts:[]
-                },
-                multipleSelection:[]
-            }
-        },
-        created: function () {
-            if(this.isLogin){
-                listCart(this)
-            }
-        },
-        methods:{
-            getDetail:function(name){
-                loadData(name,this)
-            },
-            UpdateAmount:function(row){
-                updateAmount(row.cid,row.amount)
-            },
-            /* delete row from the table, but not delete from the origin data*/
-            DeleteOne:function(id){
-                deleteOne(id,this)
-            },
-            DeleteSome:function(){
-                deleteSome(this.multipleSelection,this)
-            },
-            BuyOne:function(row){
-                buyOne(row.cid,row.amount,this)
-            },
-            BuySome:function(){
-                buySome(this.multipleSelection,this)
-            },
-            routerTo :function (book) {
-                this.$router.push({ name: 'detail', params: { Book: book, Name:book.Name }});
-            },
-            handleSelectionChange(val) {
-                this.multipleSelection = val;
-                console.log(this.multipleSelection)
-            }
-        },
-        computed:{
-            isLogin:function(){
-                return getCookie("username");
-            },
-        }
+import {getCookie} from '../utils/cookieUtil'
+
+import GoLogin from '../components/GoLogin'
+export default {
+  name: 'Cart',
+  components: {GoLogin},
+  data () {
+    return {
+      list: {
+        carts: []
+      },
+      multipleSelection: []
     }
+  },
+  created: function () {
+    if (this.isLogin) {
+      listCart(this)
+    }
+  },
+  methods: {
+    getDetail: function (name) {
+      loadBook(name, this)
+    },
+    UpdateAmount: function (row) {
+      updateAmount(row.cid, row.amount, this)
+    },
+    /* delete row from the table, but not delete from the origin data */
+    DeleteOne: function (id) {
+      deleteOne(id, this)
+    },
+    DeleteSome: function () {
+      deleteSome(this.multipleSelection, this)
+    },
+    BuyOne: function (row) {
+      buyOne(row.cid, row.amount, this)
+    },
+    BuySome: function () {
+      buySome(this.multipleSelection, this)
+    },
+    routerTo: function (book) {
+      this.$router.push({name: 'detail', params: { Book: book, Name: book.Name }})
+    },
+    handleSelectionChange (val) {
+      this.multipleSelection = val
+      // console.log(this.multipleSelection)
+    }
+  },
+  computed: {
+    isLogin: function () {
+      return getCookie('username')
+    }
+  }
+}
 </script>
 
 <style scoped>

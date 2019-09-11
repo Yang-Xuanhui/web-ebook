@@ -14,6 +14,8 @@ public class Book {
     private Double price,rate;
     private String book_intro,writer_intro,book_comment;
     private Boolean isdelete;
+
+
     public void Book(){
     }
     public Integer getBid(){
@@ -107,4 +109,5 @@ public class Book {
     public void setIsDelete(Boolean isDelete){
         this.isdelete = isDelete;
     }
+
 }

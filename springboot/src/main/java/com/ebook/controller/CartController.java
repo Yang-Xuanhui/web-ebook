@@ -31,7 +31,7 @@ public class CartController{
     @ResponseBody
     public List<Map<String,Object>> list(HttpServletRequest request){
         User user = userService.getUser(request);
-        List<Cart> carts = cartService.findbyUser(user.getUid());
+        List<Cart> carts = user.getCartList();
         /* 购物车为空 */
         if(carts==null){
             return null;
@@ -60,15 +60,19 @@ public class CartController{
     public String addToCart(@RequestBody JSONObject cart,HttpServletRequest request){
         User user = userService.getUser(request);
         if(user!=null && user.getEnable()==1){
+            List<Cart> cartlist = user.getCartList();
             Integer bid = cart.getInt("book_id");
             Integer amount = cart.getInt("amount");
             Book book = bookService.findBook(bid);
+
+            // have the same book in cart
             Cart oldcart = cartService.findCart(user.getUid(),book.getBid());
             if(oldcart != null){
                 cartService.updateAmount(oldcart.getAmount()+amount,oldcart.getCid());
                 return "加入购物车";
             }
 
+            // new book for the cart
             Cart newcart = new Cart();
             if(!book.getIsDelete() && book.getStorage()>=amount){
                 newcart.setCid(0);

@@ -8,10 +8,10 @@ public class Cart{
     @Id
     private Integer cid;
     @JoinColumn(name="uid")
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity = User.class, cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false)
     private User user;
     @JoinColumn(name="bid")
-    @ManyToOne(fetch=FetchType.LAZY, targetEntity = Book.class, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch=FetchType.LAZY, targetEntity = Book.class, cascade = CascadeType.ALL)
     private Book book;
     private Integer amount;
 

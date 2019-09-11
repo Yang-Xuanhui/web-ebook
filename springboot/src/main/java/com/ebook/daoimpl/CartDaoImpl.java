@@ -4,23 +4,15 @@ import com.ebook.dao.CartDao;
 import com.ebook.entity.Cart;
 import com.ebook.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 /* simple implementation */
 @Repository
 public class CartDaoImpl implements CartDao {
     @Autowired
     CartRepository cartRepository;
-
-    @Override
-    public List<Cart> findByUser_Uid(Integer uid){
-        return cartRepository.findByUser_Uid(uid);
-    }
 
     @Override
     public Cart findByCid(Integer cid){

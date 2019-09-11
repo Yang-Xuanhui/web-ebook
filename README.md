@@ -37,7 +37,7 @@ brief.html和detail.html有两种样式（css1.css、css2.css）
 
 ## 后端开发
 
-- ### **version 2.0**
+### **version 2.0**
 
 
 利用spring boot开发后端   *文件在 /springboot目录下*
@@ -49,15 +49,60 @@ brief.html和detail.html有两种样式（css1.css、css2.css）
 
 ### **version 2.1**
 
-spring boot + JdbcTemplete 连接mysql数据库
+- spring boot + JdbcTemplete 连接mysql数据库
+
 
 * 图书详情页的数据通过sql语句从数据库中查询得到
 
 ### version 2.2
 
-第二次迭代
+### 第二次迭代
 
 - 前后端集成
 - 实现普通用户所有功能
 
 ## 代码重构
+
+### version 3.0
+
+第三次迭代
+
+- 代码重构
+  - 后端分层（repo，dao，service，controller）
+  - 接口与实现分离（dao, daoimpl, service, serviceimpl）
+
+### version 3.1
+
+增加管理员功能，管理员可以查看已注册用户信息，并禁用/解禁用户
+
+### version 3.2
+
+使用mongod
+
+- 使用MongoDB存储书籍封面的图片数据，MySQL的book的img字段记录可以访问到图片的URL。访问这个URL时，后端根据URL里的id从MongoDB的bookCover中找到对应id的图片二进制信息，并返回给前端。
+- 前端上传书籍封面图片时，调用"/books/upload"，将图片的文件名、上传时间、图片格式、图片大小和（二进制形式的）图片内容存入MongoDB的bookstore中
+- 新增BookCover实体类和CoverRepository
+
+增加管理员功能，管理员可以增加、修改、删除书籍信息（uploadBook.vue）
+
+### version 3.3
+
+完善管理员功能
+
+- 重构User, Order的entity类（ORM）
+  - User类增加 ```List<Order> orderList``` 和 ```List<Cart> cartList``` 属性
+  - Order类增加```List<OrderItem> items``` 属性
+- 新增管理员查看指定时间内用户累计消费和书籍销量
+- 管理员查看所有订单时可根据时间、用户名和书籍进行筛选
+
+调整美化界面
+
+### 未完成……
+
+没有对后端代码进行单元测试
+
+目前的Dao层没有太大用处
+
+部分代码写得有点乱，备注比较少，需要重构代码
+
+……

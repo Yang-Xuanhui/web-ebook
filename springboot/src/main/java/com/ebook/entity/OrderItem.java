@@ -9,10 +9,10 @@ public class OrderItem{
     @Id
     private Integer id;
     @JoinColumn(name="oid")
-    @ManyToOne(targetEntity = Order.class)
+    @ManyToOne(optional = false)
     private Order order;
     @JoinColumn(name="bid")
-    @ManyToOne(targetEntity = Book.class)
+    @ManyToOne(targetEntity = Book.class, optional = false)
     private Book book;
     private Integer amount;
     private Double price;

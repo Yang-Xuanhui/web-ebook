@@ -63,12 +63,12 @@ public class OrderController{
             /* 管理员 */
             if(user != null && user.getRole()==0){
                 orders = orderService.findAll();
-                return getOrder(orders);
+                return orderService.getOrder(orders);
             }
             /* 未被禁用的用户 */
             else if(user!=null && user.getRole()==1 && user.getEnable()==1) {
                 orders = orderService.findByUser(user.getUid());
-                return getOrder(orders);
+                return orderService.getOrder(orders);
             }
             else return null;
         }
@@ -79,61 +79,75 @@ public class OrderController{
         /* 管理员 */
         if(user != null && user.getRole()==0){
             orders = orderService.findByDate(start,end);
-            return getOrder(orders);
+            return orderService.getOrder(orders);
         }
         /* 未被禁用的用户 */
         else if(user!=null && user.getRole()==1 && user.getEnable()==1) {
             orders = orderService.findByUserAndDate(user.getUid(),start,end);
-            return getOrder(orders);
+            return orderService.getOrder(orders);
         }
         else return null;
     }
 
-    /* 处理从数据库中查询到的订单，返回需要的订单信息 */
-    private List<Map<String,Object>> getOrder(List<Order> orders){
-        if(orders==null){
+    @RequestMapping(value = "/booksales", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List<Map<String,Object>> bookSales(@RequestBody JSONObject obj, HttpServletRequest request){
+        /* 从前端获取时间信息 */
+        String s_start = obj.getString("start");
+        String s_end = obj.getString("end");
+        if(userService.isAdmin(request)){
+            Timestamp begin,end;
+            begin = orderService.getBegin(s_start);
+            end = orderService.getEnd(s_end);
+
+            Map<Book, Integer> sales = orderService.findBookSales(begin,end);
+            List<Map<String,Object>> items = new ArrayList<>();
+            // traverse the result
+            for (Map.Entry<Book, Integer> entry: sales.entrySet()) {
+                Book book = entry.getKey();
+                Integer amount = entry.getValue();
+                Map<String,Object> lists= new HashMap<>();
+                lists.put("bid",book.getBid());
+                lists.put("cname",book.getCname());
+                lists.put("img",book.getImg());
+                lists.put("name",book.getName());
+                lists.put("sales",amount);
+                items.add(lists);
+            }
+            return items;
+        }
+        else{
             return null;
         }
-        List<Map<String,Object>> orderlists = new ArrayList<>();
-        /* 遍历查询结果 */
-        for(Order order:orders){
-            Map<String,Object> lists= new HashMap<>();
+    }
+
+    @RequestMapping(value = "/consumption", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List<Map<String,Object>> consumption(@RequestBody JSONObject obj, HttpServletRequest request){
+        /* 从前端获取时间信息 */
+        String s_start = obj.getString("start");
+        String s_end = obj.getString("end");
+        if(userService.isAdmin(request)){
+            Timestamp begin,end;
+            begin = orderService.getBegin(s_start);
+            end = orderService.getEnd(s_end);
+
+            Map<User, Double> consumption = orderService.findUserCsm(begin,end);
             List<Map<String,Object>> items = new ArrayList<>();
-            /* 获取一份订单中的详情 */
-            List<OrderItem> list = orderService.findItems(order.getOid());
-            /* 订单总金额 */
-            Double total = 0.0;
-            /* 遍历订单详情 */
-            for(OrderItem item:list){
-                Book book = item.getBook();
-                Integer amount = item.getAmount();
-                Double price = item.getPrice();
-                /* 计算订单总金额 */
-                total+=(price*amount);
-                /* 增添需要返回的订单信息 */
-                Map<String, Object> oneItem = new HashMap<>();
-                oneItem.put("b_id",book.getBid());
-                oneItem.put("cname",book.getCname());
-                oneItem.put("img",book.getImg());
-                oneItem.put("amount",amount);
-                oneItem.put("price",price);
-
-                /* 把订单详情添加到一份订单的List中 */
-                items.add(oneItem);
+            // traverse the result
+            for (Map.Entry<User, Double> entry: consumption.entrySet()) {
+                User user = entry.getKey();
+                Double money = entry.getValue();
+                Map<String,Object> lists= new HashMap<>();
+                lists.put("uid",user.getUid());
+                lists.put("username",user.getUsername());
+                lists.put("consumption",money);
+                items.add(lists);
             }
-            /* 给订单增加时间，总金额和订单号信息 */
-            Map<String,Object> info = new HashMap<>();
-            DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            info.put("date",sdf.format(order.getDate()));
-            info.put("total_money",total);
-            info.put("oid",order.getOid());
-            info.put("user",order.getUser().getUsername());
-            lists.put("info",info);
-
-            lists.put("items",items);
-            /* 把订单添加到订单列表中 */
-            orderlists.add(lists);
+            return items;
         }
-        return orderlists;
+        else{
+            return null;
+        }
     }
 }

@@ -7,7 +7,7 @@
         <div>
             <el-row>
                 <el-col :span="6">
-                    <img class="cover" :src="require('../static/img/'+book.img)"/>
+                    <img class="cover" :src="book.img"/>
                 </el-col>
                 <el-col :span="14" class="book-infor">
                     <ul>
@@ -66,23 +66,23 @@
 </template>
 
 <script>
-    import {addCart} from "../api/cartApi";
+import {addCart} from '../api/cartApi'
 
-    export default {
-        data(){
-            return{
-                book: this.$route.params.Book,
-            }
-        },
-        props:['Book'],
-        computed:{
-        },
-        methods:{
-            addToCart:function(bid,amount){
-                addCart(bid,amount,this);
-            },
-        },
+export default {
+  data () {
+    return {
+      book: this.$route.params.Book
     }
+  },
+  props: ['Book'],
+  computed: {
+  },
+  methods: {
+    addToCart: function (bid, amount) {
+      addCart(bid, amount, this)
+    }
+  }
+}
 </script>
 <style scoped>
     .goback{

@@ -24,104 +24,102 @@
     </div>
 </template>
 
-
 <script>
-    export default {
-        data() {
-            /* 检查输入的邮箱的格式*/
-            var checkEmail = (rule, value, callback) => {
-                const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
-                if (!value) {
-                    return callback(new Error('邮箱不能为空'))
-                }
-                setTimeout(() => {
-                    if (mailReg.test(value)) {
-                        callback()
-                    } else {
-                        callback(new Error('请输入正确的邮箱格式'))
-                    }
-                }, 100)
-            };
-            /* 检查两次密码是否一致*/
-            var validatePass = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error('请输入密码'));
-                } else {
-                    if (this.ruleForm.checkPass !== '') {
-                        this.$refs.ruleForm.validateField('checkPass');
-                    }
-                    callback();
-                }
-            };
-            var validatePass2 = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error('请再次输入密码'));
-                } else if (value !== this.ruleForm.password) {
-                    callback(new Error('两次输入密码不一致!'));
-                } else {
-                    callback();
-                }
-            };
-            return {
-                ruleForm: {
-                    username: '',
-                    email: '',
-                    password:'',
-                },
-                rules: {
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
-                    ],
-                    email: [
-                        { required: true, validator: checkEmail, trigger: 'blur' },
-                    ],
-                    password: [
-                        { required: true, validator: validatePass, trigger: 'blur' }
-                    ],
-                    checkPass: [
-                        { required: true, validator: validatePass2, trigger: 'blur' }
-                    ],
-                }
-            };
-        },
-        methods: {
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
-            },
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        this.$axios.post("http://localhost:8011/users/register",this.ruleForm)
-                            .then(res=>{
-                            if(res.data === true){
-                                this.$notify({
-                                    title: '成功',
-                                    message: '注册成功',
-                                    type: 'success'
-                                });
-                                this.$router.push({ name: 'login'});
-                            }
-                            else{
-                                this.$notify.error({
-                                    title: '错误',
-                                    message: "注册失败，用户名已被使用"
-                                });
-                                this.$refs[formName].resetFields();
-                            }
-                        })
-                            .catch((err)=>{
-                                console.log(err)
-                            });
-                    } else {
-                        console.log('error submit!');
-                        return false;
-                    }
-                });
-            },
-
+export default {
+  data () {
+    /* 检查输入的邮箱的格式 */
+    var checkEmail = (rule, value, callback) => {
+      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+      if (!value) {
+        return callback(new Error('邮箱不能为空'))
+      }
+      setTimeout(() => {
+        if (mailReg.test(value)) {
+          callback()
+        } else {
+          callback(new Error('请输入正确的邮箱格式'))
         }
+      }, 100)
     }
+    /* 检查两次密码是否一致 */
+    var validatePass = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('请输入密码'))
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass')
+        }
+        callback()
+      }
+    }
+    var validatePass2 = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('请再次输入密码'))
+      } else if (value !== this.ruleForm.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
+    return {
+      ruleForm: {
+        username: '',
+        email: '',
+        password: ''
+      },
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, validator: checkEmail, trigger: 'blur' }
+        ],
+        password: [
+          { required: true, validator: validatePass, trigger: 'blur' }
+        ],
+        checkPass: [
+          { required: true, validator: validatePass2, trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$axios.post('http://localhost:8011/users/register', this.ruleForm)
+            .then(res => {
+              if (res.data === true) {
+                this.$notify({
+                  title: '成功',
+                  message: '注册成功',
+                  type: 'success'
+                })
+                this.$router.push({name: 'login'})
+              } else {
+                this.$notify.error({
+                  title: '错误',
+                  message: '注册失败，用户名已被使用'
+                })
+                this.$refs[formName].resetFields()
+              }
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        } else {
+          console.log('error submit!')
+          return false
+        }
+      })
+    }
+
+  }
+}
 
 </script>
 

@@ -3,10 +3,15 @@ package com.ebook.controller;
 
 import com.ebook.entity.User;
 import com.ebook.service.UserService;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -64,6 +69,25 @@ public class UserController{
         /* 密码或用户名不正确 */
         else
             return 0;
+    }
+
+    @RequestMapping(value="/showusers",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List<Map<String,Object>> showUsers(HttpServletRequest request){
+        if(userService.isAdmin(request)){
+            List<User> lists = userService.findAll();
+            List<Map<String,Object>> returnlist = new ArrayList<>();
+            for(User user:lists){
+                Map<String,Object> map = new HashMap<>();
+                map.put("username", user.getUsername());
+                map.put("email",user.getEmail());
+                map.put("role",user.getRole());
+                map.put("enable",user.getEnable());
+                returnlist.add(map);
+            }
+            return returnlist;
+        }
+        return null;
     }
 
     @RequestMapping(value="/ban",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
